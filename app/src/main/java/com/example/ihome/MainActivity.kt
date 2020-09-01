@@ -7,6 +7,8 @@ import android.widget.AdapterView
 import android.widget.GridView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ihome.SmartLights.SmartLights
+import com.example.ihome.Thermometer.Thermometer
 import com.example.ihome.adapters.MenuAdapter
 import com.example.ihome.models.MenuItem
 import com.example.ihome.security.Security
@@ -66,7 +68,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                 startActivity(securityIntent)
             }
             1 -> {
-            print("x == 2")
+                var smartLightsIntent = Intent(this, SmartLights::class.java)
+                startActivity(smartLightsIntent)
+            }
+            2 ->{
+                var ThemIntent = Intent(this, Thermometer::class.java)
+                startActivity(ThemIntent)
             }
             else -> { // Note the block
                 print("x is neither 1 nor 2")
