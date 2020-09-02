@@ -1,9 +1,11 @@
 package com.example.ihome.security
 
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -36,11 +38,12 @@ class Security : AppCompatActivity() {
         actionBar.setDisplayHomeAsUpEnabled(true)
 
         checkAlarm()  //check if buzzer is turned on
-
+        security_imageView_unshield.setOnClickListener {
+            turnOnShield()
+        }
         security_switch_alarm.setOnCheckedChangeListener({ _ , isChecked ->
             if (isChecked) {
                 alarmController(1)
-                now()
             }else{
                 alarmController(0)
             }
@@ -72,56 +75,6 @@ class Security : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun now(){
-        var currentTime:LocalDateTime = LocalDateTime.now();
-        var fos: FileOutputStream ? = null
-        val now = currentTime.toString()
-        try{
-            fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE)
-            fos.write(now.toByteArray())
-            Log.d("TestingSecurity", "${now.toByteArray()}")
-        }catch (e:FileNotFoundException){
-            Log.d("TestingSecurity", "${e.printStackTrace()}")
-        }catch (e:IOException){
-            Log.d("TestingSecurity", "${e.printStackTrace()}")
-        }finally {
-            if(fos != null){
-                try{
-                    fos.close()
-                }catch (e:IOException){
-                    Log.d("TestingSecurity", "${e.printStackTrace()}")
-                }
-            }
-        }
-    }
-
-    private fun load(){
-        var fis:FileInputStream ? = null
-        try{
-            fis = openFileInput(FILE_NAME)
-            var isr: InputStreamReader = InputStreamReader(fis)
-            var br: BufferedReader = BufferedReader(isr)
-            var sb: StringBuilder = StringBuilder()
-            val text:String  = br.readLine()
-            while (text != null){
-                sb.append(text).append("\n")
-            }
-            Log.d("TestingSecurity_LOAData", "${sb.toString()}")
-        }catch (e:FileNotFoundException){
-            Log.d("TestingSecurity_LOAD", "${e.printStackTrace()}")
-        }catch (e:IOException){
-            Log.d("TestingSecurity_LOAD", "${e.printStackTrace()}")
-        }finally {
-            if(fis != null){
-                try{
-                    fis.close()
-                }catch (e:IOException){
-                    Log.d("TestingSecurity_LOAD", "${e.printStackTrace()}")
-                }
-
-            }
-        }
-    }
 
     private fun getSensorData(){
         val date = "PI_01_"+date
@@ -144,17 +97,15 @@ class Security : AppCompatActivity() {
         })
     }
 
+    private fun turnOnShield(){
+        security_imageView_unshield.visibility = View.INVISIBLE
+        security_imageView_shield.visibility = View.VISIBLE
+        security_textView_shieldedStat.text = "Your home is secured"
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         this.finish()
         return true
-    }
-
-    class reportTime(){
-        var date : Date ? = null
-
-        constructor(date: Date?) : this() {
-            this.date  = date
-        }
     }
 }
