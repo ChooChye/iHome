@@ -13,7 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".security.SecurityOptions"></activity>
+        <service
+            android:name=".security.SecurityService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".security.SecurityOptions" />
         <activity android:name=".Thermometer.Thermometer" />
         <activity android:name=".SmartLights.SmartLights" />
         <activity android:name=".security.Security" />

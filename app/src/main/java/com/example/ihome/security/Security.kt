@@ -28,7 +28,6 @@ import kotlin.math.floor
 
 
 class Security : AppCompatActivity() {
-    private val FILE_NAME = "example.txt"
 
     private var database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference("PI_01_CONTROL") //PI_01_CONTROL
@@ -47,9 +46,11 @@ class Security : AppCompatActivity() {
         actionBar.title = "Security"
         actionBar.setDisplayHomeAsUpEnabled(true)
         createNotificationChannel()
+
         //checkAlarm()  //check if buzzer is turned on
         security_imageView_unshield.setOnClickListener {
             turnOnShield()
+            //getSensorData()
         }
         security_imageView_shield.setOnClickListener {
             turnOffShield()
@@ -75,7 +76,11 @@ class Security : AppCompatActivity() {
             }
         })
     }*/
-
+    private fun alarmController(control:Int){
+        var map = mutableMapOf<String,Any>()
+        map["buzzer"] = control
+        myRef.updateChildren(map) //add into Firebase
+    }
     @RequiresApi(Build.VERSION_CODES.O)
 
     private fun getSensorData(){
@@ -93,8 +98,9 @@ class Security : AppCompatActivity() {
                         //change the path variable
                         sensorData = data.child("ultra").getValue().toString()
                         //Log.d("TestingSecurity_Sensor", sensorData)
-                        if(sensorData == 493.toString()){
-                            Log.d("TestingSecurity_Sensor", "Matched")
+                        if(sensorData >= 500.toString()){
+                            //notifyUser()
+                            Log.d("TestingSecurity_Sensor", "Intruder")
                         }
                     }
                     //security_textView_report.text = child.toString()
