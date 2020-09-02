@@ -6,28 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".security.security">
 
-    <TextView
-        android:id="@+id/security_textView_alarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:text="Alarm"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Switch
-        android:id="@+id/security_switch_alarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/security_textView_alarm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/security_textView_alarm" />
-
     <ImageView
         android:id="@+id/security_imageView_shield"
         android:layout_width="312dp"
@@ -62,5 +40,16 @@
         app:layout_constraintEnd_toEndOf="@+id/security_imageView_unshield"
         app:layout_constraintStart_toStartOf="@+id/security_imageView_unshield"
         app:layout_constraintTop_toBottomOf="@+id/security_imageView_unshield" />
+
+    <TextView
+        android:id="@+id/security_textView_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Configure Security Settings"
+        android:textColor="#2196F3"
+        app:layout_constraintEnd_toEndOf="@+id/security_textView_shieldedStat"
+        app:layout_constraintStart_toStartOf="@+id/security_textView_shieldedStat"
+        app:layout_constraintTop_toBottomOf="@+id/security_textView_shieldedStat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
