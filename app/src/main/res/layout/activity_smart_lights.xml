@@ -6,4 +6,132 @@
     android:layout_height="match_parent"
     tools:context=".SmartLights.SmartLights">
 
+    <TextView
+        android:id="@+id/smartLights_textView_temparature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="32dp"
+        android:text="Temparature"
+        android:textSize="16sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/smartLights_textView_temparatureCelsius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="32dp"
+
+        android:text="℃"
+        android:textColor="@color/temp_text"
+
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_temparature"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_temparature"
+        app:layout_constraintTop_toTopOf="@+id/smartLights_textView_temparature" />
+
+
+    <ImageView
+        android:id="@+id/smartLights_imageView_on"
+        android:layout_width="312dp"
+        android:layout_height="356dp"
+        android:src="@drawable/light_on"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429" />
+
+    <ImageView
+        android:id="@+id/smartLights_imageView_off"
+        android:layout_width="312dp"
+        android:layout_height="356dp"
+        android:src="@drawable/light_off"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429" />
+
+
+
+    <TextView
+        android:id="@+id/smartLights_textView_bedroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="250dp"
+        android:layout_marginRight="250dp"
+        android:text="Bedroom"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_imageView_off"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_imageView_off"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_imageView_off" />
+
+    <Switch
+        android:id="@+id/smartLights_switch_bedroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="250dp"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="32dp"
+        android:checked="false"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_imageView_off"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_imageView_off"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_imageView_off" />
+
+    <TextView
+        android:id="@+id/smartLights_textView_livingroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="16dp"
+        android:text="Living Room"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_bedroom"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_bedroom"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_bedroom" />
+
+    <Switch
+        android:id="@+id/smartLights_switch_livingroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:checked="false"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_switch_bedroom"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_switch_bedroom"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_switch_bedroom" />
+
+    <TextView
+        android:id="@+id/smartLights_textView_bathroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="16dp"
+        android:text="Bathroom"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_livingroom"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_livingroom"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_livingroom" />
+
+    <Switch
+        android:id="@+id/smartLights_switch_bathroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:checked="false"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_switch_livingroom"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_switch_livingroom"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_switch_livingroom" />
 </androidx.constraintlayout.widget.ConstraintLayout>
