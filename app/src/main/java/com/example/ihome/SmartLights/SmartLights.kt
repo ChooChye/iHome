@@ -72,9 +72,11 @@ class SmartLights : AppCompatActivity() {
         if(smartLights_switch_livingroom.isChecked) {
             smartLights_imageView_off.visibility = View.INVISIBLE
             smartLights_imageView_on.visibility = View.VISIBLE
+            lightController(1)
         }else{
             smartLights_imageView_off.visibility = View.VISIBLE
             smartLights_imageView_on.visibility = View.INVISIBLE
+            lightController(0)
         }
     }
     /*
