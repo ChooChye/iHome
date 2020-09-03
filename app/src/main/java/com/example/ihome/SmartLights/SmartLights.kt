@@ -35,13 +35,13 @@ class SmartLights : AppCompatActivity() {
        //check if led is turned on
 
         smartLights_switch_bedroom.setOnClickListener {
-            turnOnOffLight()
+            turnOnOffLight_bedroom()
         }
         smartLights_switch_bathroom.setOnClickListener {
-            turnOnOffLight()
+            turnOnOffLight_bathroom()
         }
         smartLights_switch_livingroom.setOnClickListener {
-            turnOnOffLight()
+            turnOnOffLight_livingroom()
         }
     }
 
@@ -51,76 +51,185 @@ class SmartLights : AppCompatActivity() {
         myRef.updateChildren(map) //add into Firebase
     }
 
-
-    private fun turnOnOffLight(){
-        if(smartLights_switch_bedroom.isChecked) {
-            smartLights_imageView_off.visibility = View.INVISIBLE
-            smartLights_imageView_on.visibility = View.VISIBLE
-        }else{
-            smartLights_imageView_off.visibility = View.VISIBLE
-            smartLights_imageView_on.visibility = View.INVISIBLE
-        }
-
-        if(smartLights_switch_bathroom.isChecked) {
-            smartLights_imageView_off.visibility = View.INVISIBLE
-            smartLights_imageView_on.visibility = View.VISIBLE
-        }else{
-            smartLights_imageView_off.visibility = View.VISIBLE
-            smartLights_imageView_on.visibility = View.INVISIBLE
-        }
-
-        if(smartLights_switch_livingroom.isChecked) {
-            smartLights_imageView_off.visibility = View.INVISIBLE
-            smartLights_imageView_on.visibility = View.VISIBLE
-        }else{
-            smartLights_imageView_off.visibility = View.VISIBLE
-            smartLights_imageView_on.visibility = View.INVISIBLE
-        }
-    }
-    /*
-    private fun turnOnLight(){
-        smartLights_switch_bedroom.isChecked = true
-        smartLights_imageView_off.visibility = View.VISIBLE
-        smartLights_imageView_on.visibility = View.INVISIBLE
-    }
-
-    private fun turnOffLight(){
-        smartLights_switch_bedroom.isChecked = false
-        smartLights_imageView_off.visibility = View.VISIBLE
-        smartLights_imageView_on.visibility = View.INVISIBLE
-    }
-    */
-
-    //get temperature data
+    //get data user enter the room
     private fun getSensorData(){
         val date = "PI_01_"+date
         var myRefSens = database.getReference(date).child(hour).orderByKey().limitToLast(1)
 
         myRefSens.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                Log.d("Temperature_Sensor", "${p0.toException()}")
+                Log.d("TestingRoom_Sensor", "${p0.toException()}")
             }
             override fun onDataChange(p0: DataSnapshot) {
                 if(p0.exists()){
                     val child = p0.children
                     for (data in child){
                         //change the path variable
-                        sensorData = data.child("tempe").getValue().toString()
-                        //Log.d("TestingSecurity_Sensor", sensorData)
-                        if(sensorData >= 26.toString()){
+                        sensorData = data.child("ultra2").getValue().toString()
+
+                        if(sensorData >= 500.toString()){
                             //notifyUser()
-                            Log.d("Temperature_Sensor", "Temperature high, you should turn OFF light")
-                        }else  if(sensorData < 26.toString()){
-                            //notifyUser()
-                            Log.d("Temperature_Sensor", "Temperature low, you should turn ON light")
+                            smartLights_textView_YouAreIn.text="You are IN"
+                            Log.d("TestingRoom_Sensor", "Intruder")
                         }
                     }
-
                 }
             }
         })
     }
 
+
+    private fun turnOnOffLight_bedroom() {
+        if (smartLights_switch_bedroom.isChecked) {
+            smartLights_textView_roomOnOff.visibility = View.VISIBLE
+            smartLights_imageView_off.visibility = View.INVISIBLE
+            smartLights_imageView_on.visibility = View.VISIBLE
+            smartLights_imageView_bedroom.visibility= View.VISIBLE
+
+            smartLights_button_bedroom1.visibility= View.VISIBLE
+            smartLights_button_bedroom2.visibility= View.VISIBLE
+            smartLights_button_bedroom3.visibility= View.VISIBLE
+
+            //lightController(1)
+
+            if (smartLights_button_bedroom1.isClickable){
+                lightController(1)
+            }else if(smartLights_button_bedroom2.isClickable){
+                lightController(2)
+            }else if(smartLights_button_bedroom3.isClickable){
+                lightController(3)
+            }
+
+        } else {
+            smartLights_textView_roomOnOff.visibility = View.INVISIBLE
+            smartLights_imageView_off.visibility = View.VISIBLE
+            smartLights_imageView_on.visibility = View.INVISIBLE
+            smartLights_imageView_bedroom.visibility= View.INVISIBLE
+
+            smartLights_button_bedroom1.visibility= View.INVISIBLE
+            smartLights_button_bedroom2.visibility= View.INVISIBLE
+            smartLights_button_bedroom3.visibility= View.INVISIBLE
+
+            lightController(0)
+        }
+    }
+
+    private fun turnOnOffLight_bathroom() {
+        if (smartLights_switch_bedroom.isChecked) {
+            smartLights_textView_roomOnOff.visibility = View.VISIBLE
+            smartLights_imageView_off.visibility = View.INVISIBLE
+            smartLights_imageView_on.visibility = View.VISIBLE
+            smartLights_imageView_bathroom.visibility= View.VISIBLE
+
+            smartLights_button_bathroom1.visibility= View.VISIBLE
+            smartLights_button_bathroom2.visibility= View.VISIBLE
+            smartLights_button_bathroom3.visibility= View.VISIBLE
+
+            if (smartLights_button_bathroom1.isClickable){
+                lightController(1)
+            }else if(smartLights_button_bathroom2.isClickable){
+                lightController(2)
+            }else if(smartLights_button_bathroom3.isClickable){
+                lightController(3)
+            }
+        } else {
+            smartLights_textView_roomOnOff.visibility = View.INVISIBLE
+            smartLights_imageView_off.visibility = View.VISIBLE
+            smartLights_imageView_on.visibility = View.INVISIBLE
+            smartLights_imageView_bathroom.visibility= View.INVISIBLE
+
+            smartLights_button_bathroom1.visibility= View.INVISIBLE
+            smartLights_button_bathroom2.visibility= View.INVISIBLE
+            smartLights_button_bathroom3.visibility= View.INVISIBLE
+
+            lightController(0)
+        }
+    }
+
+    private fun turnOnOffLight_livingroom() {
+        if (smartLights_switch_bedroom.isChecked) {
+            smartLights_textView_roomOnOff.visibility = View.VISIBLE
+            smartLights_imageView_off.visibility = View.INVISIBLE
+            smartLights_imageView_on.visibility = View.VISIBLE
+            smartLights_imageView_livingroom.visibility= View.VISIBLE
+
+            smartLights_button_livingroom1.visibility= View.VISIBLE
+            smartLights_button_livingroom2.visibility= View.VISIBLE
+            smartLights_button_livingroom3.visibility= View.VISIBLE
+
+            if (smartLights_button_livingroom1.isClickable){
+                lightController(1)
+            }else if(smartLights_button_livingroom2.isClickable){
+                lightController(2)
+            }else if(smartLights_button_livingroom3.isClickable){
+                lightController(3)
+            }
+        } else {
+            smartLights_textView_roomOnOff.visibility = View.INVISIBLE
+            smartLights_imageView_off.visibility = View.VISIBLE
+            smartLights_imageView_on.visibility = View.INVISIBLE
+            smartLights_imageView_livingroom.visibility= View.INVISIBLE
+
+            smartLights_button_livingroom1.visibility= View.INVISIBLE
+            smartLights_button_livingroom2.visibility= View.INVISIBLE
+            smartLights_button_livingroom3.visibility= View.INVISIBLE
+
+            lightController(0)
+        }
+    }
+
+
+
+
+    /*
+    private fun turnOnOffLight(){
+        if (smartLights_switch_bedroom.isChecked) {
+            smartLights_imageView_off.visibility = View.INVISIBLE
+            smartLights_imageView_on.visibility = View.VISIBLE
+            smartLights_imageView_bedroom.visibility= View.VISIBLE
+        } else {
+            smartLights_imageView_off.visibility = View.VISIBLE
+            smartLights_imageView_on.visibility = View.INVISIBLE
+            smartLights_imageView_bedroom.visibility= View.INVISIBLE
+        }
+
+        if (smartLights_switch_bedroom.isChecked) {
+            smartLights_imageView_off.visibility = View.INVISIBLE
+            smartLights_imageView_on.visibility = View.VISIBLE
+            smartLights_imageView_bathroom.visibility= View.VISIBLE
+        } else {
+            smartLights_imageView_off.visibility = View.VISIBLE
+            smartLights_imageView_on.visibility = View.INVISIBLE
+            smartLights_imageView_bathroom.visibility= View.INVISIBLE
+        }
+
+        if (smartLights_switch_bedroom.isChecked) {
+            smartLights_imageView_off.visibility = View.INVISIBLE
+            smartLights_imageView_on.visibility = View.VISIBLE
+            smartLights_imageView_livingroom.visibility= View.VISIBLE
+        } else {
+            smartLights_imageView_off.visibility = View.VISIBLE
+            smartLights_imageView_on.visibility = View.INVISIBLE
+            smartLights_imageView_livingroom.visibility= View.INVISIBLE
+        }
+
+        /*
+        if(smartLights_switch_livingroom.isChecked) {
+            smartLights_imageView_off.visibility = View.INVISIBLE
+            smartLights_imageView_on.visibility = View.VISIBLE
+            smartLights_textView_roomOnOff.text="**LIVING ROOM ON**"
+        }else{
+            smartLights_imageView_off.visibility = View.VISIBLE
+            smartLights_imageView_on.visibility = View.INVISIBLE
+            smartLights_textView_roomOnOff.text="**LIVING ROOM OFF**"
+        }
+
+         */
+    }
+
+
+
+     */
 
     //Show back button
     override fun onSupportNavigateUp(): Boolean {

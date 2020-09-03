@@ -7,39 +7,36 @@
     tools:context=".SmartLights.SmartLights">
 
     <TextView
-        android:id="@+id/smartLights_textView_temparature"
+        android:id="@+id/smartLights_textView_YouAreIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="32dp"
-        android:text="Temparature"
-        android:textSize="16sp"
-
+        android:text=""
+        android:textColor="@color/sensorRoom_text"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/smartLights_textView_temparatureCelsius"
+        android:id="@+id/smartLights_textView_sensorRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="32dp"
-
-        android:text="℃"
-        android:textColor="@color/temp_text"
-
+        android:text=""
+        android:textColor="@color/sensorRoom_text"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_temparature"
-        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_temparature"
-        app:layout_constraintTop_toTopOf="@+id/smartLights_textView_temparature" />
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_YouAreIn"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_YouAreIn"
+        app:layout_constraintTop_toTopOf="@+id/smartLights_textView_YouAreIn" />
 
 
     <ImageView
         android:id="@+id/smartLights_imageView_on"
         android:layout_width="312dp"
-        android:layout_height="356dp"
+        android:layout_height="320dp"
+        android:layout_marginBottom="60dp"
         android:src="@drawable/light_on"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +49,8 @@
     <ImageView
         android:id="@+id/smartLights_imageView_off"
         android:layout_width="312dp"
-        android:layout_height="356dp"
+        android:layout_height="320dp"
+        android:layout_marginBottom="60dp"
         android:src="@drawable/light_off"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,20 +59,109 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.429" />
 
+    <ImageView
+        android:id="@+id/smartLights_imageView_bedroom"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="300dp"
+        android:layout_marginRight="300dp"
+        android:layout_marginBottom="330dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bedroom"
+        android:visibility="invisible"/>
 
+    <ImageView
+        android:id="@+id/smartLights_imageView_bathroom"
+        app:srcCompat="@drawable/bathroom"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_imageView_bedroom"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_imageView_bedroom"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_imageView_bedroom"
+        android:visibility="invisible"/>
+
+
+    <ImageView
+        android:id="@+id/smartLights_imageView_livingroom"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_imageView_bathroom"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_imageView_bathroom"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_imageView_bathroom"
+        app:srcCompat="@drawable/living_room"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/smartLights_textView_roomOnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="You can adjust brightness"
+        android:textStyle="bold"
+        android:textColor="@color/roomOnOff_text"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_imageView_off"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_imageView_off"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_imageView_off" />
 
     <TextView
         android:id="@+id/smartLights_textView_bedroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="250dp"
         android:layout_marginRight="250dp"
         android:text="Bedroom"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/smartLights_imageView_off"
-        app:layout_constraintStart_toStartOf="@+id/smartLights_imageView_off"
-        app:layout_constraintTop_toBottomOf="@+id/smartLights_imageView_off" />
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_roomOnOff" />
+
+
+    <Button
+        android:id="@+id/smartLights_button_bedroom1"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:text="1"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_roomOnOff" />
+
+    <Button
+        android:id="@+id/smartLights_button_bedroom2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:text="2"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_roomOnOff" />
+
+    <Button
+        android:id="@+id/smartLights_button_bedroom3"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="95dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginTop="14dp"
+        android:text="3"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_roomOnOff" />
 
     <Switch
         android:id="@+id/smartLights_switch_bedroom"
@@ -82,30 +169,68 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="250dp"
         android:layout_marginLeft="250dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:checked="false"
         android:text=""
-        app:layout_constraintEnd_toEndOf="@+id/smartLights_imageView_off"
-        app:layout_constraintStart_toStartOf="@+id/smartLights_imageView_off"
-        app:layout_constraintTop_toBottomOf="@+id/smartLights_imageView_off" />
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_roomOnOff" />
 
     <TextView
-        android:id="@+id/smartLights_textView_livingroom"
+        android:id="@+id/smartLights_textView_bathroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginTop="16dp"
-        android:text="Living Room"
+        android:layout_marginTop="21dp"
+        android:text="Bathroom"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_bedroom"
         app:layout_constraintStart_toStartOf="@+id/smartLights_textView_bedroom"
         app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_bedroom" />
 
+    <Button
+        android:id="@+id/smartLights_button_bathroom1"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:text="1"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_roomOnOff" />
+
+    <Button
+        android:id="@+id/smartLights_button_bathroom2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:text="2"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_roomOnOff" />
+
+    <Button
+        android:id="@+id/smartLights_button_bathroom3"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="95dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginTop="52dp"
+        android:text="3"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_roomOnOff" />
+
     <Switch
-        android:id="@+id/smartLights_switch_livingroom"
+        android:id="@+id/smartLights_switch_bathroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="14dp"
         android:checked="false"
         android:text=""
         app:layout_constraintEnd_toEndOf="@+id/smartLights_switch_bedroom"
@@ -113,25 +238,65 @@
         app:layout_constraintTop_toBottomOf="@+id/smartLights_switch_bedroom" />
 
     <TextView
-        android:id="@+id/smartLights_textView_bathroom"
+        android:id="@+id/smartLights_textView_livingroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginTop="16dp"
-        android:text="Bathroom"
+        android:layout_marginTop="21dp"
+        android:text="Living Room"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_livingroom"
-        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_livingroom"
-        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_livingroom" />
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_bathroom"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_bathroom"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_bathroom" />
+
+    <Button
+        android:id="@+id/smartLights_button_livingroom1"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:text="1"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_roomOnOff" />
+
+    <Button
+        android:id="@+id/smartLights_button_livingroom2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:text="2"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_roomOnOff" />
+
+    <Button
+        android:id="@+id/smartLights_button_livingroom3"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="95dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginTop="90dp"
+        android:text="3"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_textView_roomOnOff"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_textView_roomOnOff" />
 
     <Switch
-        android:id="@+id/smartLights_switch_bathroom"
+        android:id="@+id/smartLights_switch_livingroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="14dp"
         android:checked="false"
         android:text=""
-        app:layout_constraintEnd_toEndOf="@+id/smartLights_switch_livingroom"
-        app:layout_constraintStart_toStartOf="@+id/smartLights_switch_livingroom"
-        app:layout_constraintTop_toBottomOf="@+id/smartLights_switch_livingroom" />
+        app:layout_constraintEnd_toEndOf="@+id/smartLights_switch_bathroom"
+        app:layout_constraintStart_toStartOf="@+id/smartLights_switch_bathroom"
+        app:layout_constraintTop_toBottomOf="@+id/smartLights_switch_bathroom" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
