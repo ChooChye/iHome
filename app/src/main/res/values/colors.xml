@@ -6,4 +6,6 @@
     <color name="black">#000000</color>
     <color name="sensorRoom_text">#7834F1</color>
     <color name="brightness_text">#FF6736</color>
+    <color name="humid">#28F86D</color>
+    <color name="temp">#1F56FA</color>
 </resources>
