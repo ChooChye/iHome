@@ -62,17 +62,13 @@
         android:id="@+id/thermometer_textView_humid_bedroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="270dp"
-        android:layout_marginRight="270dp"
-        android:layout_marginBottom="650dp"
-        android:text=""
-        android:textColor="@color/humid"
-        android:textStyle="bold"
+        android:text="0"
+        android:textColor="#4CAF50"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_imageView_bedroom"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_imageView_bedroom"
-        app:layout_constraintTop_toBottomOf="@+id/thermometer_imageView_bedroom" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_bedroom"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_humid"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_bedroom" />
 
     <ImageView
         android:id="@+id/thermometer_imageView_bedroom"
@@ -89,33 +85,27 @@
         android:id="@+id/thermometer_textView_temp_bedroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="270dp"
-        android:layout_marginLeft="270dp"
-        android:layout_marginBottom="650dp"
-        android:text=""
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="0"
         android:textColor="@color/temp"
-        android:textStyle="bold"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_imageView_bedroom"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_imageView_bedroom"
-        app:layout_constraintTop_toBottomOf="@+id/thermometer_imageView_bedroom" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_bedroom"
+        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_temp"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_bedroom" />
 
     <TextView
         android:id="@+id/thermometer_textView_humid_bathroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="270dp"
-        android:layout_marginRight="270dp"
-        android:layout_marginBottom="450dp"
-        android:text=""
-        android:textColor="@color/humid"
-        android:textStyle="bold"
+        android:text="0"
+        android:textColor="#4CAF50"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_imageView_bathroom"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_imageView_bathroom"
-        app:layout_constraintTop_toBottomOf="@+id/thermometer_imageView_bathroom" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_bathroom"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_humid_bedroom"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_bathroom" />
 
 
     <ImageView
@@ -132,33 +122,25 @@
         android:id="@+id/thermometer_textView_temp_bathroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="270dp"
-        android:layout_marginLeft="270dp"
-        android:layout_marginBottom="450dp"
-        android:text=""
+        android:text="0"
         android:textColor="@color/temp"
-        android:textStyle="bold"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_imageView_bathroom"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_imageView_bathroom"
-        app:layout_constraintTop_toBottomOf="@+id/thermometer_imageView_bathroom" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_bathroom"
+        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_temp_bedroom"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_bathroom" />
 
     <TextView
         android:id="@+id/thermometer_textView_humid_livingroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="270dp"
-        android:layout_marginRight="270dp"
-        android:layout_marginBottom="300dp"
-        android:text=""
-        android:textColor="@color/humid"
-        android:textStyle="bold"
+        android:text="0"
+        android:textColor="#4CAF50"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_imageView_livingroom"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_imageView_livingroom"
-        app:layout_constraintTop_toBottomOf="@+id/thermometer_imageView_livingroom" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_livingroom"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_humid_bathroom"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_livingroom" />
 
     <ImageView
         android:id="@+id/thermometer_imageView_livingroom"
@@ -174,16 +156,12 @@
         android:id="@+id/thermometer_textView_temp_livingroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="270dp"
-        android:layout_marginLeft="270dp"
-        android:layout_marginBottom="300dp"
-        android:text=""
+        android:text="0"
         android:textColor="@color/temp"
-        android:textStyle="bold"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_imageView_livingroom"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_imageView_livingroom"
-        app:layout_constraintTop_toBottomOf="@+id/thermometer_imageView_livingroom" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_livingroom"
+        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_temp_bathroom"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_livingroom" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,7 +27,7 @@ class SecurityOptions : AppCompatActivity() {
     private val myRef = database.getReference("PI_01_CONTROL") //PI_01_CONTROL
     //private var storageRef = FirebaseStorage.getInstance().getReference().child("PI_01_CONTROL")
     var myRefSens = database.getReference(date).child(hour).orderByKey().limitToLast(1)
-    private lateinit var sensorListener : ValueEventListener
+    private lateinit var securityOptionsListener : ValueEventListener
     private lateinit var sensorData:String
     val SHARED_PREF : String? = null
     val SECURITY_VAL : String? = null
@@ -63,7 +63,7 @@ class SecurityOptions : AppCompatActivity() {
             }else{
                 saveData(0)
                 stopService(Intent(this, SecurityService::class.java))
-                myRefSens.removeEventListener(sensorListener)
+                myRefSens.removeEventListener(securityOptionsListener)
             }
         })
 
@@ -136,7 +136,7 @@ class SecurityOptions : AppCompatActivity() {
     }
 
     private fun getSensorData(){
-        sensorListener = object : ValueEventListener {
+        securityOptionsListener = object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 showLog("${p0.toException()}")
             }
@@ -156,7 +156,7 @@ class SecurityOptions : AppCompatActivity() {
                 }
             }
         }
-        myRefSens.addValueEventListener(sensorListener)
+        myRefSens.addValueEventListener(securityOptionsListener)
     }
 
     fun updateReportView(){
@@ -186,7 +186,8 @@ class SecurityOptions : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        myRefSens.removeEventListener(sensorListener)
+        showLog("SecurityOptionsOnDestroy")
+        myRefSens.removeEventListener(securityOptionsListener)
         super.onDestroy()
     }
 }

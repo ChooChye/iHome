@@ -29,19 +29,19 @@ class SmartLights : AppCompatActivity() {
         var actionBar: ActionBar = supportActionBar!!
         actionBar.title = "Smart Lights"
         actionBar.setDisplayHomeAsUpEnabled(true)
-        getSensorData()
-
+        //getSensorData()
 
        //check if led is turned on
 
         smartLights_switch_bedroom.setOnClickListener {
-            //turnOnOffLight_bedroom()
+            turnOnOffLight_bedroom()
         }
         smartLights_switch_bathroom.setOnClickListener {
             turnOnOffLight_bathroom()
         }
         smartLights_switch_livingroom.setOnClickListener {
             turnOnOffLight_livingroom()
+
         }
     }
 
