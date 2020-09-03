@@ -44,21 +44,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         return arrayList
     }
 
-    private fun moduleController(){
-
-        var map = mutableMapOf<String,Any>()
-        map["buzzer"] = "1"
-        map["camera"] = "1"
-        map["lcd"] = "1"
-        map["lcdtext"] = "= App ="
-        map["led"] = "0"
-        map["relay"] = "0"
-
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("CONTROL")
-        myRef.setValue(map) //add into Firebase
-
-    }
 
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         var items:MenuItem = arrayList!!.get(p2)

@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.nfc.Tag
 import android.opengl.Visibility
 import android.os.Build
@@ -29,7 +30,10 @@ import kotlin.math.floor
 
 
 class Security : AppCompatActivity() {
+    val SHARED_PREF : String? = null
+    val SECURITY_VAL : String? = null
 
+    private var savedPref: Int? = null
     val TAG = "securityService"
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -39,7 +43,8 @@ class Security : AppCompatActivity() {
         var actionBar:ActionBar = supportActionBar!!
         actionBar.title = "Security"
         actionBar.setDisplayHomeAsUpEnabled(true)
-
+        loadData()
+        updateViews()
         security_imageView_unshield.setOnClickListener {
             turnOnShield()
         }
@@ -51,29 +56,13 @@ class Security : AppCompatActivity() {
         }
     }
 
-    /*private fun checkAlarm(){
-        myRef.addValueEventListener(object : ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                //Log.d("TestingSecurity_READ", "${p0.toException()}")
-            }
-            override fun onDataChange(p0: DataSnapshot) {
-                if(p0.exists()){
-                    val map: Map<String, Object> = p0.getValue() as Map<String, Object>
-                    //Log.d("TestingSecurity_Buzz", "Value is: " + map["buzzer"]);
-                    if(map["buzzer"].toString() == 1.toString()){
-                        //if buzzer == 1 turn on switch
-                        security_switch_alarm.isChecked = true
-                    }
-                }
-            }
-        })
-    }*/
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun turnOnShield(){
         security_imageView_unshield.visibility = View.INVISIBLE
         security_imageView_shield.visibility = View.VISIBLE
         security_textView_shieldedStat.text = "Your home is secured"
+        saveData(1)
         startSensorService()
     }
 
@@ -81,9 +70,11 @@ class Security : AppCompatActivity() {
         security_imageView_unshield.visibility = View.VISIBLE
         security_imageView_shield.visibility = View.INVISIBLE
         security_textView_shieldedStat.text = "Click the shield to secure your home"
+        saveData(0)
         stopSensorService()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun startSensorService(){
         val intent = Intent(this, SecurityService::class.java)
         startService(intent)
@@ -92,6 +83,29 @@ class Security : AppCompatActivity() {
     private fun stopSensorService(){
         val intent = Intent(this, SecurityService::class.java)
         stopService(intent)
+    }
+
+    fun saveData(value : Int){
+        val sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putInt(SECURITY_VAL, value)
+        editor.apply()
+    }
+
+    fun loadData(){
+        val sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
+        savedPref = sharedPreferences.getInt(SECURITY_VAL, 0)
+        showLog(savedPref.toString())
+    }
+
+    fun updateViews(){
+        if(savedPref == 0){
+            security_imageView_unshield.visibility = View.VISIBLE
+            security_imageView_shield.visibility = View.INVISIBLE
+        }else{
+            security_imageView_unshield.visibility = View.INVISIBLE
+            security_imageView_shield.visibility = View.VISIBLE
+        }
     }
 
     fun showLog(message: String){

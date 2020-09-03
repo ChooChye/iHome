@@ -47,13 +47,14 @@ class SecurityService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         showLog("OnStartCommand")
         getSensorData()
-        return START_NOT_STICKY
+        return Service.START_STICKY
         //return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         showLog("DestroyService")
+
         myRefSens.removeEventListener(sensorListener)
     }
     fun showLog(message: String){
