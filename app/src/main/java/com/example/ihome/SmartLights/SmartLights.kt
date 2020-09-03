@@ -199,9 +199,6 @@ class SmartLights : AppCompatActivity() {
         myRef.updateChildren(map) //add into Firebase
     }
 
-
-
-
     /*
     private fun turnOnOffLight(){
         if (smartLights_switch_bedroom.isChecked) {
