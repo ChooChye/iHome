@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.nfc.Tag
 import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
@@ -29,14 +30,7 @@ import kotlin.math.floor
 
 class Security : AppCompatActivity() {
 
-    private var database = FirebaseDatabase.getInstance()
-    private val myRef = database.getReference("PI_01_CONTROL") //PI_01_CONTROL
-    private val CHANNEL_ID = "channel_id_security"
-    private val noti_ID = 101
-    private val date: String = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
-    private val hour: String = SimpleDateFormat("HH", Locale.getDefault()).format(Date())
-
-    private lateinit var sensorData:String
+    val TAG = "securityService"
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,12 +39,9 @@ class Security : AppCompatActivity() {
         var actionBar:ActionBar = supportActionBar!!
         actionBar.title = "Security"
         actionBar.setDisplayHomeAsUpEnabled(true)
-        createNotificationChannel()
 
-        //checkAlarm()  //check if buzzer is turned on
         security_imageView_unshield.setOnClickListener {
             turnOnShield()
-            //getSensorData()
         }
         security_imageView_shield.setOnClickListener {
             turnOffShield()
@@ -59,6 +50,7 @@ class Security : AppCompatActivity() {
             startActivity(Intent(this, SecurityOptions::class.java))
         }
     }
+
     /*private fun checkAlarm(){
         myRef.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
@@ -76,79 +68,34 @@ class Security : AppCompatActivity() {
             }
         })
     }*/
-    private fun alarmController(control:Int){
-        var map = mutableMapOf<String,Any>()
-        map["buzzer"] = control
-        myRef.updateChildren(map) //add into Firebase
-    }
+
     @RequiresApi(Build.VERSION_CODES.O)
-
-    private fun getSensorData(){
-        val date = "PI_01_"+date
-        var myRefSens = database.getReference(date).child(hour).orderByKey().limitToLast(1)
-
-        myRefSens.addValueEventListener(object : ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d("TestingSecurity_Sensor", "${p0.toException()}")
-            }
-            override fun onDataChange(p0: DataSnapshot) {
-                if(p0.exists()){
-                    val child = p0.children
-                    for (data in child){
-                        //change the path variable
-                        sensorData = data.child("ultra").getValue().toString()
-                        //Log.d("TestingSecurity_Sensor", sensorData)
-                        if(sensorData >= 500.toString()){
-                            //notifyUser()
-                            Log.d("TestingSecurity_Sensor", "Intruder")
-                        }
-                    }
-                    //security_textView_report.text = child.toString()
-                }
-            }
-        })
-    }
-
     private fun turnOnShield(){
         security_imageView_unshield.visibility = View.INVISIBLE
         security_imageView_shield.visibility = View.VISIBLE
         security_textView_shieldedStat.text = "Your home is secured"
+        startSensorService()
     }
+
     private fun turnOffShield(){
         security_imageView_unshield.visibility = View.VISIBLE
         security_imageView_shield.visibility = View.INVISIBLE
         security_textView_shieldedStat.text = "Click the shield to secure your home"
+        stopSensorService()
     }
 
-    private fun notifyUser(){
-        val textTitle = "Security Alert"
-        val textContent = "Intruder Detected"
-        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-            .setContentTitle(textTitle)
-            .setContentText(textContent)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        with(NotificationManagerCompat.from(this)){
-            notify(noti_ID, builder.build())
-        }
+    private fun startSensorService(){
+        val intent = Intent(this, SecurityService::class.java)
+        startService(intent)
     }
 
-    private fun createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Security Alert"
-            val descriptionText = "Alarm has been triggered"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-            // Register the channel with the system
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
+    private fun stopSensorService(){
+        val intent = Intent(this, SecurityService::class.java)
+        stopService(intent)
+    }
+
+    fun showLog(message: String){
+        Log.d(TAG, message)
     }
 
     override fun onSupportNavigateUp(): Boolean {
