@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">iHome</string>
+    <string name="where">Bedroom, Bathroom, Living Room</string>
 </resources>
