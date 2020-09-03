@@ -32,7 +32,7 @@ import kotlin.math.floor
 class Security : AppCompatActivity() {
     val SHARED_PREF : String? = null
     val SECURITY_VAL : String? = null
-
+    private lateinit var sharedPreferences : SharedPreferences
     private var savedPref: Int? = null
     val TAG = "securityService"
 
@@ -89,11 +89,12 @@ class Security : AppCompatActivity() {
         val sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = sharedPreferences.edit()
         editor.putInt(SECURITY_VAL, value)
+
         editor.apply()
     }
 
     fun loadData(){
-        val sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
         savedPref = sharedPreferences.getInt(SECURITY_VAL, 0)
         showLog(savedPref.toString())
     }
@@ -116,5 +117,12 @@ class Security : AppCompatActivity() {
         onBackPressed()
         this.finish()
         return true
+    }
+
+    override fun onDestroy() {
+        val editor : SharedPreferences.Editor = sharedPreferences.edit()
+        editor.clear()
+        editor.commit()
+        super.onDestroy()
     }
 }

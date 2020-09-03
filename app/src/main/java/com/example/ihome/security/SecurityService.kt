@@ -6,7 +6,6 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -16,11 +15,15 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class SecurityService : Service() {
 
     private val mdate: String = java.text.SimpleDateFormat("yyyyMMdd",java.util.Locale.getDefault()).format(java.util.Date())
     private val hour: String = java.text.SimpleDateFormat("HH", java.util.Locale.getDefault()).format(java.util.Date())
+
     private val date = "PI_01_"+mdate
     private var database = FirebaseDatabase.getInstance()
     var myRefSens = database.getReference(date).child(hour).orderByKey().limitToLast(1)
@@ -30,8 +33,9 @@ class SecurityService : Service() {
     private val noti_ID = 101
     private val CHANNEL_ID = "channel_id_security"
 
+    //private var reportList : ArrayList<Reports>? = null
 
-    val TAG = "securityService"
+    val TAG = "DebuggingIOT"
 
 
     override fun onBind(intent: Intent): IBinder ? {
@@ -41,6 +45,7 @@ class SecurityService : Service() {
     override fun onCreate() {
         showLog("OnCreate")
         createNotificationChannel()
+        //timeStamp()
         super.onCreate()
     }
 
@@ -52,37 +57,44 @@ class SecurityService : Service() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         showLog("DestroyService")
-
         myRefSens.removeEventListener(sensorListener)
+        super.onDestroy()
     }
     fun showLog(message: String){
         Log.d(TAG, message)
     }
 
     private fun getSensorData(){
-            sensorListener = object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    showLog("${p0.toException()}")
-                }
-                override fun onDataChange(p0: DataSnapshot) {
-                    if(p0.exists()){
-                        val child = p0.children
-                        for (data in child){
-                            //change the path variable
-                            sensorData = data.child("ultra").getValue().toString()
-                            if(sensorData < 500.toString()){
-                                notifyUser()
-                                showLog("Intruder")
-                            }
+        sensorListener = object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                showLog("${p0.toException()}")
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    val child = p0.children
+                    for (data in child){
+                        //change the path variable
+                        sensorData = data.child("Pot1").getValue().toString()
+                        if(sensorData < 500.toString()){
+                            notifyUser()
+                            val timeStamp = timeStamp()
+                            //showLog("Intruder detected at $sensorData | $timeStamp")
                         }
                     }
                 }
             }
-            myRefSens.addValueEventListener(sensorListener)
+        }
+        myRefSens.addValueEventListener(sensorListener)
     }
 
+    fun timeStamp() : String{
+        //val reportTimeStamp: String = java.text.SimpleDateFormat("d MMM yyyy HH:mm:ss",java.util.Locale.getDefault()).format(java.util.Date())
+        val milliseconds = System.currentTimeMillis()
+        val sdf = SimpleDateFormat("d MMM yyyy HH:mm:ss")
+        val resultDate = Date(milliseconds)
+        return sdf.format(resultDate)
+    }
     private fun notifyUser(){
         val textTitle = "Security Alert"
         val textContent = "Intruder Detected"
