@@ -40,7 +40,7 @@
         app:layout_constraintTop_toTopOf="@+id/security_textView_alarm2" />
 
     <Switch
-        android:id="@+id/security_switch_alarm2"
+        android:id="@+id/security_switch_sensor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
@@ -74,7 +74,66 @@
         android:text="Manually turn on/off sensors"
         android:textColor="#F44336"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/security_switch_alarm2"
+        app:layout_constraintEnd_toEndOf="@+id/security_switch_sensor"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/security_button_camera"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="CAPTURE IMAGE"
+        app:layout_constraintEnd_toEndOf="@+id/security_switch_sensor"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Using CCTV to capture a picture"
+        android:textColor="#F44336"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/security_button_camera"
+        app:layout_constraintStart_toStartOf="@+id/security_button_camera"
+        app:layout_constraintTop_toBottomOf="@+id/security_button_camera" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="8dp"
+
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#ccc"
+        app:layout_constraintEnd_toEndOf="@+id/security_button_camera"
+        app:layout_constraintStart_toStartOf="@+id/security_button_camera"
+        app:layout_constraintTop_toBottomOf="@id/textView5"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Report"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/security_textView_reportList"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView6"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 </androidx.constraintlayout.widget.ConstraintLayout>

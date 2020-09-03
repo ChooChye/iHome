@@ -29,13 +29,13 @@ class SmartLights : AppCompatActivity() {
         var actionBar: ActionBar = supportActionBar!!
         actionBar.title = "Smart Lights"
         actionBar.setDisplayHomeAsUpEnabled(true)
-
+        getSensorData()
 
 
        //check if led is turned on
 
         smartLights_switch_bedroom.setOnClickListener {
-            turnOnOffLight_bedroom()
+            //turnOnOffLight_bedroom()
         }
         smartLights_switch_bathroom.setOnClickListener {
             turnOnOffLight_bathroom()
@@ -45,11 +45,7 @@ class SmartLights : AppCompatActivity() {
         }
     }
 
-    private fun lightController(control:Int){
-        var map = mutableMapOf<String,Any>()
-        map["led"] = control
-        myRef.updateChildren(map) //add into Firebase
-    }
+
 
     //get data user enter the room
     private fun getUltra2SensorData(){
@@ -195,6 +191,12 @@ class SmartLights : AppCompatActivity() {
 
             lightController(0)
         }
+    }
+
+    private fun lightController(control:Int){
+        var map = mutableMapOf<String,Any>()
+        map["led"] = control
+        myRef.updateChildren(map) //add into Firebase
     }
 
 

@@ -2,6 +2,7 @@ package com.example.ihome
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.GridView
@@ -46,7 +47,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
 
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        var items:MenuItem = arrayList!!.get(p2)
         when (p2) {
             0 -> {
                 var securityIntent = Intent(this, Security::class.java)
@@ -60,9 +60,15 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                 var ThemIntent = Intent(this, Thermometer::class.java)
                 startActivity(ThemIntent)
             }
-            else -> { // Note the block
-                print("x is neither 1 nor 2")
-            }
         }
+    }
+
+    override fun onStart() {
+        Log.d("homeMa", "OnStartHome")
+        super.onStart()
+    }
+    override fun onDestroy() {
+        Log.d("homeMa", "OnDestroyHome")
+        super.onDestroy()
     }
 }
