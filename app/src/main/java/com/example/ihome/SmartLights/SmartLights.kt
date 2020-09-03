@@ -90,8 +90,9 @@ class SmartLights : AppCompatActivity() {
             smartLights_button_bedroom2.visibility= View.VISIBLE
             smartLights_button_bedroom3.visibility= View.VISIBLE
 
-            //lightController(1)
+            lightController(1)
 
+            /*
             if (smartLights_button_bedroom1.isClickable){
                 lightController(1)
             }else if(smartLights_button_bedroom2.isClickable){
@@ -99,7 +100,7 @@ class SmartLights : AppCompatActivity() {
             }else if(smartLights_button_bedroom3.isClickable){
                 lightController(3)
             }
-
+            */
         } else {
             smartLights_textView_roomOnOff.visibility = View.INVISIBLE
             smartLights_imageView_off.visibility = View.VISIBLE
@@ -125,6 +126,9 @@ class SmartLights : AppCompatActivity() {
             smartLights_button_bathroom2.visibility= View.VISIBLE
             smartLights_button_bathroom3.visibility= View.VISIBLE
 
+            lightController(1)
+
+            /*
             if (smartLights_button_bathroom1.isClickable){
                 lightController(1)
             }else if(smartLights_button_bathroom2.isClickable){
@@ -132,6 +136,7 @@ class SmartLights : AppCompatActivity() {
             }else if(smartLights_button_bathroom3.isClickable){
                 lightController(3)
             }
+            */
         } else {
             smartLights_textView_roomOnOff.visibility = View.INVISIBLE
             smartLights_imageView_off.visibility = View.VISIBLE
@@ -157,6 +162,9 @@ class SmartLights : AppCompatActivity() {
             smartLights_button_livingroom2.visibility= View.VISIBLE
             smartLights_button_livingroom3.visibility= View.VISIBLE
 
+            lightController(1)
+
+            /*
             if (smartLights_button_livingroom1.isClickable){
                 lightController(1)
             }else if(smartLights_button_livingroom2.isClickable){
@@ -164,6 +172,7 @@ class SmartLights : AppCompatActivity() {
             }else if(smartLights_button_livingroom3.isClickable){
                 lightController(3)
             }
+            */
         } else {
             smartLights_textView_roomOnOff.visibility = View.INVISIBLE
             smartLights_imageView_off.visibility = View.VISIBLE
