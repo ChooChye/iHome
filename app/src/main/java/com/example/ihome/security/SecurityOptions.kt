@@ -1,6 +1,7 @@
 package com.example.ihome.security
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,8 +13,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_security.*
 import kotlinx.android.synthetic.main.activity_security_options.*
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -47,6 +46,7 @@ class SecurityOptions : AppCompatActivity() {
         if(savedPref == 1){
             getSensorData()
         }
+        reportList = ArrayList()
         updateSensors()
         checkAlarm()
         security_switch_alarm.setOnCheckedChangeListener({ _ , isChecked ->
@@ -62,6 +62,8 @@ class SecurityOptions : AppCompatActivity() {
                 saveData(1)
             }else{
                 saveData(0)
+                stopService(Intent(this, SecurityService::class.java))
+                myRefSens.removeEventListener(sensorListener)
             }
         })
 
@@ -146,7 +148,6 @@ class SecurityOptions : AppCompatActivity() {
                         sensorData = data.child("Pot1").getValue().toString()
                         if(sensorData < 500.toString()){
                             val timeStamp = timeStamp()
-                            reportList = ArrayList()
                             reportList.add(Reports(timeStamp))
                             showLog("Intruder detected at $sensorData | $timeStamp")
                             updateReportView()
@@ -159,15 +160,17 @@ class SecurityOptions : AppCompatActivity() {
     }
 
     fun updateReportView(){
+        var fullReport : String? = null
         for(data in reportList){
-            security_textView_reportList.text = "Intruder detected at ${data.timestamp}"
+            fullReport = "${data.timestamp} - Intruder detected \n"
         }
+        security_textView_reportList.text = fullReport
     }
 
     fun timeStamp() : String{
         //val reportTimeStamp: String = java.text.SimpleDateFormat("d MMM yyyy HH:mm:ss",java.util.Locale.getDefault()).format(java.util.Date())
         val milliseconds = System.currentTimeMillis()
-        val sdf = SimpleDateFormat("d MMM yyyy HH:mm:ss")
+        val sdf = SimpleDateFormat("HH:mm:ss")
         val resultDate = Date(milliseconds)
         return sdf.format(resultDate)
     }
