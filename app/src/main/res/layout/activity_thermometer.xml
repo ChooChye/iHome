@@ -6,57 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".Thermometer.Thermometer">
 
-    <TextView
-        android:id="@+id/thermometer_textView_humid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="250dp"
-        android:layout_marginRight="250dp"
-        android:text="Humid"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/black"
+
+    <ImageView
+        android:id="@+id/thermometer_imageView_livingroom"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:src="@drawable/living_room"
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_bathroom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/humid_percent"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_humid"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_humid"
-        app:layout_constraintTop_toBottomOf="@+id/thermometer_textView_humid"/>
-
-    <TextView
-        android:id="@+id/thermometer_textView_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
-        android:layout_marginLeft="250dp"
-        android:layout_marginTop="50dp"
-        android:text="Temperature"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/temp_celsius"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_temp"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_temp"
-        app:layout_constraintTop_toBottomOf="@+id/thermometer_textView_temp"/>
+        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_bathroom"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/thermometer_textView_humid_bedroom"
@@ -64,36 +25,41 @@
         android:layout_height="wrap_content"
         android:text="0"
         android:textColor="#4CAF50"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_bedroom"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_humid"
-        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_bedroom" />
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_textView_humid"
+        app:layout_constraintEnd_toEndOf="@+id/thermometer_imageView_bedroom"
+        app:layout_constraintHorizontal_bias="0.636"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_imageView_bedroom"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_textView_humid"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/thermometer_imageView_bedroom"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_marginBottom="350dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginLeft="168dp"
         android:src="@drawable/bedroom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_bathroom"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_bathroom"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/thermometer_textView_temp_bedroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
         android:text="0"
         android:textColor="@color/temp"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_bedroom"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_temp"
-        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_bedroom" />
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_textView_temp"
+        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_humid_bedroom"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_humid_bedroom"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_textView_temp"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/thermometer_textView_humid_bathroom"
@@ -101,22 +67,25 @@
         android:layout_height="wrap_content"
         android:text="0"
         android:textColor="#4CAF50"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_bathroom"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_humid_bedroom"
-        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_bathroom" />
-
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_textView_humid_bedroom"
+        app:layout_constraintEnd_toEndOf="@+id/thermometer_imageView_bathroom"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_imageView_bathroom"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_textView_humid_bedroom"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/thermometer_imageView_bathroom"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/bathroom"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_imageView_bedroom"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_imageView_bedroom"
-        app:layout_constraintTop_toBottomOf="@+id/thermometer_imageView_bedroom" />
+        app:layout_constraintEnd_toStartOf="@+id/thermometer_imageView_livingroom"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toEndOf="@+id/thermometer_imageView_bedroom"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/thermometer_textView_temp_bathroom"
@@ -124,11 +93,14 @@
         android:layout_height="wrap_content"
         android:text="0"
         android:textColor="@color/temp"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_bathroom"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_temp_bedroom"
-        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_bathroom" />
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_textView_temp_bedroom"
+        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_humid_bathroom"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_humid_bathroom"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_textView_temp_bedroom"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/thermometer_textView_humid_livingroom"
@@ -136,21 +108,14 @@
         android:layout_height="wrap_content"
         android:text="0"
         android:textColor="#4CAF50"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_livingroom"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_humid_bathroom"
-        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_livingroom" />
-
-    <ImageView
-        android:id="@+id/thermometer_imageView_livingroom"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/living_room"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_imageView_bathroom"
-        app:layout_constraintStart_toStartOf="@+id/thermometer_imageView_bathroom"
-        app:layout_constraintTop_toBottomOf="@+id/thermometer_imageView_bathroom" />
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_textView_humid_bathroom"
+        app:layout_constraintEnd_toEndOf="@+id/thermometer_imageView_livingroom"
+        app:layout_constraintHorizontal_bias="0.272"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_imageView_livingroom"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_textView_humid_bathroom"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/thermometer_textView_temp_livingroom"
@@ -158,10 +123,100 @@
         android:layout_height="wrap_content"
         android:text="0"
         android:textColor="@color/temp"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/thermometer_imageView_livingroom"
-        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_temp_bathroom"
-        app:layout_constraintTop_toTopOf="@+id/thermometer_imageView_livingroom" />
+        app:layout_constraintBottom_toBottomOf="@+id/thermometer_textView_temp_bathroom"
+        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_humid_livingroom"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_humid_livingroom"
+        app:layout_constraintTop_toTopOf="@+id/thermometer_textView_temp_bathroom"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/thermometer_textView_humid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="250dp"
+        android:layout_marginRight="250dp"
+        android:text="@string/humid_percent"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thermometer_imageView_bathroom" />
+
+    <TextView
+        android:id="@+id/thermometer_textView_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/temp_celsius"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_humid"
+        app:layout_constraintTop_toBottomOf="@+id/thermometer_textView_humid" />
+
+    <View
+        android:id="@+id/viewDivider2"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#ccc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thermometer_textView_temp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Fan Speed"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_temp"
+        app:layout_constraintTop_toBottomOf="@+id/viewDivider2" />
+
+    <TextView
+        android:id="@+id/therm_textView_fan_bedroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView7"
+        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_temp_bedroom"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_temp_bedroom"
+        app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+    <TextView
+        android:id="@+id/therm_textView_fan_living"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/therm_textView_fan_bedroom"
+        app:layout_constraintEnd_toEndOf="@+id/thermometer_textView_temp_livingroom"
+        app:layout_constraintStart_toStartOf="@+id/thermometer_textView_temp_livingroom"
+        app:layout_constraintTop_toTopOf="@+id/therm_textView_fan_bedroom" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Data is updated every 10 seconds"
+        android:textColor="#F44336"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

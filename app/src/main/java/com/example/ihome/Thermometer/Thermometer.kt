@@ -3,6 +3,10 @@ package com.example.ihome.Thermometer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.ActionBar
 import com.example.ihome.R
 import com.google.firebase.database.DataSnapshot
@@ -27,6 +31,8 @@ class Thermometer : AppCompatActivity() {
     private lateinit var sensorData:String
     private lateinit var sensorHumidListener: ValueEventListener
     private lateinit var sensorTempListener: ValueEventListener
+    lateinit var option : Spinner
+
     val TAG = "DebuggingIOT"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +41,7 @@ class Thermometer : AppCompatActivity() {
         var actionBar: ActionBar = supportActionBar!!
         actionBar.title = "Thermometer"
         actionBar.setDisplayHomeAsUpEnabled(true)
+
 
         getHumidSensorData()
         getTempSensorData()
@@ -51,13 +58,9 @@ class Thermometer : AppCompatActivity() {
                     for (data in child){
                         //change the path variable
                         sensorData = data.child("ultra2").getValue().toString()
-
-                        thermometer_textView_humid_bedroom.text = sensorData.toString()
-                        thermometer_textView_humid_bathroom.text = sensorData.toString()
-                        thermometer_textView_humid_livingroom.text = sensorData.toString()
-                        if(sensorData < 500.toString()){
-                            Log.d(TAG, "Humidity = $sensorData")
-                        }
+                        thermometer_textView_humid_bedroom.text = (sensorData.toDouble()+random()).toString()
+                        thermometer_textView_humid_bathroom.text = (sensorData.toDouble()+random()).toString()
+                        thermometer_textView_humid_livingroom.text = (sensorData.toDouble()+random()).toString()
                     }
                 }
             }
@@ -76,13 +79,13 @@ class Thermometer : AppCompatActivity() {
                     for (data in child){
                         //change the path variable
                         sensorData = data.child("tempe").getValue().toString()
-
-                        thermometer_textView_temp_bedroom.text = sensorData.toString()
-                        thermometer_textView_temp_bathroom.text = sensorData.toString()
-                        thermometer_textView_temp_livingroom.text = sensorData.toString()
-                        if(sensorData < 500.toString()){
-                            Log.d(TAG, "Temp = $sensorData")
-                        }
+                        val bedroom = (sensorData.toDouble()+random()).toString()
+                        val living = (sensorData.toDouble()+random()).toString()
+                        thermometer_textView_temp_bedroom.text = (sensorData.toDouble()+random()).toString()
+                        thermometer_textView_temp_bathroom.text = (sensorData.toDouble()+random()).toString()
+                        thermometer_textView_temp_livingroom.text = (sensorData.toDouble()+random()).toString()
+                        setFanSpeed(1,bedroom)
+                        setFanSpeed(2,living)
                     }
                 }
             }
@@ -90,15 +93,45 @@ class Thermometer : AppCompatActivity() {
         myRefSens.addValueEventListener(sensorTempListener)
     }
 
+    private fun random(): Double{
+        return ((1..20).random()).toDouble()
+    }
+
     private fun destroyListeners(){
         myRefSens.removeEventListener(sensorHumidListener)
         myRefSens.removeEventListener(sensorTempListener)
     }
+
+    private fun setFanSpeed(fan:Int , room: String){
+        if(fan == 1){
+            if(room <= "24.0"){
+                therm_textView_fan_bedroom.text = "1"
+            }
+            if(room >= "25.0"){
+                therm_textView_fan_bedroom.text = "2"
+            }
+            if(room >= "30.0"){
+                therm_textView_fan_bedroom.text = "3"
+            }
+        }else{
+            if(room <= "24.0"){
+                therm_textView_fan_living.text = "1"
+            }
+            if(room >= "25.0"){
+                therm_textView_fan_living.text = "2"
+            }
+            if(room >= "30.0"){
+                therm_textView_fan_living.text = "3"
+            }
+        }
+    }
+
     override fun onDestroy() {
         Log.d(TAG, "ThemometerOnDestroy")
         destroyListeners()
         super.onDestroy()
     }
+
     //Show back button
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
