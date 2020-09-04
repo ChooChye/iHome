@@ -1,19 +1,26 @@
 package com.example.ihome.security
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import com.example.ihome.R
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FileDownloadTask
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_security_options.*
+import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,18 +29,20 @@ import kotlin.collections.ArrayList
 class SecurityOptions : AppCompatActivity() {
     private val mdate: String = java.text.SimpleDateFormat("yyyyMMdd",java.util.Locale.getDefault()).format(java.util.Date())
     private val hour: String = java.text.SimpleDateFormat("HH", java.util.Locale.getDefault()).format(java.util.Date())
+    private val mTime: String = java.text.SimpleDateFormat("mmss", java.util.Locale.getDefault()).format(java.util.Date())
     private val date = "PI_01_"+mdate
     private var database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference("PI_01_CONTROL") //PI_01_CONTROL
-    //private var storageRef = FirebaseStorage.getInstance().getReference().child("PI_01_CONTROL")
+    private var storageRef = FirebaseStorage.getInstance().getReference()
     var myRefSens = database.getReference(date).child(hour).orderByKey().limitToLast(1)
     private lateinit var securityOptionsListener : ValueEventListener
     private lateinit var sensorData:String
     val SHARED_PREF : String? = null
     val SECURITY_VAL : String? = null
-    val TAG = "DebuggingIOT"
+
     private var savedPref: Int? = null
 
+    private lateinit var folder: String
     private lateinit var reportList : ArrayList<Reports>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +52,7 @@ class SecurityOptions : AppCompatActivity() {
         actionBar.title = "Security Options"
         actionBar.setDisplayHomeAsUpEnabled(true)
         loadData()
+        showPic()
         if(savedPref == 1){
             getSensorData()
         }
@@ -56,7 +66,6 @@ class SecurityOptions : AppCompatActivity() {
                 alarmController(0)
             }
         })
-
         security_switch_sensor.setOnCheckedChangeListener({ _ , isChecked ->
             if(isChecked){
                 saveData(1)
@@ -66,6 +75,9 @@ class SecurityOptions : AppCompatActivity() {
                 myRefSens.removeEventListener(securityOptionsListener)
             }
         })
+        security_button_camera.setOnClickListener(){
+            takePic()
+        }
 
     }
 
@@ -121,17 +133,36 @@ class SecurityOptions : AppCompatActivity() {
         }
     }
 
-    fun takePic(cameraUI: Int){
-        var map = mutableMapOf<String,Any>()
-        map["camera"] = cameraUI
-        myRef.updateChildren(map) //add into Firebase
+    @SuppressLint("SimpleDateFormat")
+    fun takePic(){
+        val fileName = fileName()
+        folder = "PI_01_CONTROL/cam_$fileName.jpg"
+        Thread {
+            showLog("TurnOnCamera")
+            var map = mutableMapOf<String,Any>()
+            map["camera"] = "1"
+            myRef.updateChildren(map) //add into Firebase
+            Thread.sleep(4000)
+            showLog("TurnOffCamera | PI_01_CONTROL/cam_$fileName.jpg")
+            map["camera"] = "0"
+            myRef.updateChildren(map)
+        }.start()
     }
 
     private fun showPic(){
         try{
-            //storageRef.getFile()
+            var file: File = File.createTempFile("image", "jpg")
+            storageRef.child(folder).getFile(file)
+                .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
+                    showLog("Inside")
+                    val bitmap : Bitmap = BitmapFactory.decodeFile(file.absolutePath)
+                    securityOptions_imageView_cam.setImageBitmap(bitmap)
+                }).addOnFailureListener(OnFailureListener {
+                    // Handle failed download
+                    showLog("Fail to show pic #675")
+                })
         }catch (e: IOException){
-            showLog("")
+            showLog("Empty #q234")
         }
     }
 
@@ -168,14 +199,23 @@ class SecurityOptions : AppCompatActivity() {
     }
 
     fun timeStamp() : String{
-        //val reportTimeStamp: String = java.text.SimpleDateFormat("d MMM yyyy HH:mm:ss",java.util.Locale.getDefault()).format(java.util.Date())
         val milliseconds = System.currentTimeMillis()
         val sdf = SimpleDateFormat("HH:mm:ss")
         val resultDate = Date(milliseconds)
         return sdf.format(resultDate)
     }
 
+    fun fileName():Long{
+        val milliseconds = System.currentTimeMillis()
+        val sdf = SimpleDateFormat("yyyyMMddHHmmss")
+        val resultTime = sdf.format(Date(milliseconds))
+        val fileName = Math.round(resultTime.toDouble()/10.0) * 10
+
+        return fileName
+    }
+
     fun showLog(message: String){
+        val TAG = "DebuggingIOT"
         Log.d(TAG, message)
     }
 
