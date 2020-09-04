@@ -1,11 +1,13 @@
 package com.example.ihome.SmartLights
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ihome.R
+import com.example.ihome.security.Reports
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -22,6 +24,9 @@ class SmartLights : AppCompatActivity() {
     private val hour: String = SimpleDateFormat("HH", Locale.getDefault()).format(Date())
 
     private lateinit var sensorData:String
+    private lateinit var smartLights_ultra2Listener : ValueEventListener
+    private lateinit var smartLights_lightListener : ValueEventListener
+    var myRefSens = database.getReference(date).child(hour).orderByKey().limitToLast(1)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +50,79 @@ class SmartLights : AppCompatActivity() {
         }
     }
 
+    private fun getUltra2SensorData(){
+        smartLights_ultra2Listener = object : ValueEventListener {
 
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("TestingRoom_Sensor", "${p0.toException()}")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    val child = p0.children
+                    for (data in child){
+                        //change the path variable
+                        sensorData = data.child("ultra2").getValue().toString()
+                        if(sensorData < 10.toString()){
+                            Log.d("TestingRoom_Sensor", "Intruder")
+                            smartLights_textView_YouAreIn.visibility = View.VISIBLE
+                            smartLights_textView_sensorRoom.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
+        }
+        myRefSens.addValueEventListener(smartLights_ultra2Listener)
+    }
+
+     @SuppressLint("LongLogTag")
+     fun ultra2onDestroy() {
+        Log.d("smartLights_ulra2OnDestroy", "ultra2 destroy")
+        myRefSens.removeEventListener(smartLights_ultra2Listener)
+        super.onDestroy()
+    }
+
+    private fun getLightSensorData(){
+        smartLights_lightListener = object : ValueEventListener {
+
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("TestingLight_Sensor", "${p0.toException()}")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    val child = p0.children
+                    for (data in child){
+                        //change the path variable
+                        sensorData = data.child("light").getValue().toString()
+
+                        smartLights_textView_brightnessBathroom.text = sensorData.toString()
+                        smartLights_textView_brightnessBedroom.text = sensorData.toString()
+                        smartLights_textView_brightnessLivingroom.text = sensorData.toString()
+
+                        /*
+                        if(sensorData < 10.toString()){
+                            Log.d("TestingLight_Sensor", "Intruder")
+                            smartLights_textView_YouAreIn.text = "You are IN"
+                            smartLights_textView_sensorRoom.visibility = View.VISIBLE
+                        }
+
+                         */
+                    }
+                }
+            }
+        }
+        myRefSens.addValueEventListener(smartLights_lightListener)
+    }
+
+     @SuppressLint("LongLogTag")
+     fun lightonDestroy() {
+        Log.d("smartLights_lightOnDestroy", "light destroy")
+        myRefSens.removeEventListener(smartLights_lightListener)
+        super.onDestroy()
+    }
+
+/*
 
     //get data user enter the room
     private fun getUltra2SensorData(){
@@ -107,6 +184,8 @@ class SmartLights : AppCompatActivity() {
             }
         })
     }
+
+    */
 
     private fun turnOnOffLight_bedroom() {
         if (smartLights_switch_bedroom.isChecked) {
