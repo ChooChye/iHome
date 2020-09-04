@@ -20,6 +20,7 @@ import com.example.ihome.R
 import com.example.ihome.Thermometer.Thermometer
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_security.*
+import kotlinx.android.synthetic.main.activity_security_options.*
 import java.io.*
 import java.lang.StringBuilder
 import java.time.LocalDateTime
@@ -32,6 +33,7 @@ import kotlin.math.floor
 class Security : AppCompatActivity() {
     val SHARED_PREF : String? = null
     val SECURITY_VAL : String? = null
+    private val myRef = FirebaseDatabase.getInstance().getReference("PI_01_CONTROL") //PI_01_CONTROL
     private lateinit var sharedPreferences : SharedPreferences
     private var savedPref: Int? = null
     val TAG = "securityService"
@@ -50,12 +52,35 @@ class Security : AppCompatActivity() {
         }
         security_imageView_shield.setOnClickListener {
             turnOffShield()
+            disableAlarm()
         }
         security_textView_options.setOnClickListener {
             startActivity(Intent(this, SecurityOptions::class.java))
         }
     }
 
+
+    private fun disableAlarm(){
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("DebuggingIOT", "${p0.toException()}")
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                try{
+                    if(p0.exists()){
+                        val map: Map<String, Object> = p0.getValue() as Map<String, Object>
+                        if(map["buzzer"].toString() == "1"){
+                            var map = mutableMapOf<String,Any>()
+                            map["buzzer"] = "0"
+                            myRef.updateChildren(map) //add into Firebase
+                        }
+                    }
+                }catch (e: IOException){
+                    showLog("Error #312 $e")
+                }
+            }
+        })
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun turnOnShield(){

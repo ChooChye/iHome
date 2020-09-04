@@ -26,6 +26,7 @@ class SecurityService : Service() {
 
     private val date = "PI_01_"+mdate
     private var database = FirebaseDatabase.getInstance()
+    private val myRef = database.getReference("PI_01_CONTROL")
     var myRefSens = database.getReference(date).child(hour).orderByKey().limitToLast(1)
 
     private lateinit var sensorData:String
@@ -80,14 +81,19 @@ class SecurityService : Service() {
                         sensorData = data.child("Pot1").getValue().toString()
                         if(sensorData < 500.toString()){
                             notifyUser()
-                            val timeStamp = timeStamp()
-                            //showLog("Intruder detected at $sensorData | $timeStamp")
+                            activateBuzzer()
                         }
                     }
                 }
             }
         }
         myRefSens.addValueEventListener(sensorListener)
+    }
+
+    private fun activateBuzzer(){
+        var map = mutableMapOf<String,Any>()
+        map["buzzer"] = "1"
+        myRef.updateChildren(map) //add into Firebase
     }
 
     fun timeStamp() : String{
