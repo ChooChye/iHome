@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ihome.R
@@ -37,7 +38,7 @@ class SecurityOptions : AppCompatActivity() {
     private val myRef = database.getReference("PI_01_CONTROL") //PI_01_CONTROL
     private var storageRef = FirebaseStorage.getInstance().getReference()
     var myRefSens = database.getReference(date).child(hour).orderByKey().limitToLast(1)
-    private lateinit var securityOptionsListener : ValueEventListener
+    private var securityOptionsListener : ValueEventListener? = null
     private lateinit var sensorData:String
     val SHARED_PREF : String? = null
     val SECURITY_VAL : String? = null
@@ -73,7 +74,9 @@ class SecurityOptions : AppCompatActivity() {
             }else{
                 saveData(0)
                 stopService(Intent(this, SecurityService::class.java))
-                myRefSens.removeEventListener(securityOptionsListener)
+                if(securityOptionsListener != null){
+                    myRefSens.removeEventListener(securityOptionsListener!!)
+                }
             }
         })
         security_button_camera.setOnClickListener(){
@@ -135,6 +138,7 @@ class SecurityOptions : AppCompatActivity() {
 
     @SuppressLint("SimpleDateFormat")
     fun takePic(){
+        securityOptions_progressBar.visibility = View.VISIBLE
         val fileName = fileName()
         folder = "PI_01_CONTROL/cam_$fileName.jpg"
         Thread {
@@ -146,6 +150,7 @@ class SecurityOptions : AppCompatActivity() {
             showLog("TurnOffCamera | PI_01_CONTROL/cam_$fileName.jpg")
             map["camera"] = "0"
             myRef.updateChildren(map)
+            securityOptions_progressBar.visibility = View.INVISIBLE
             showPic()
         }.start()
     }
@@ -190,7 +195,7 @@ class SecurityOptions : AppCompatActivity() {
                 }
             }
         }
-        myRefSens.addValueEventListener(securityOptionsListener)
+        myRefSens.addValueEventListener(securityOptionsListener!!)
     }
 
     fun updateReportView(){
@@ -243,7 +248,9 @@ class SecurityOptions : AppCompatActivity() {
 
     override fun onDestroy() {
         showLog("SecurityOptionsOnDestroy")
-        myRefSens.removeEventListener(securityOptionsListener)
+        if(securityOptionsListener != null){
+            myRefSens.removeEventListener(securityOptionsListener!!)
+        }
         super.onDestroy()
     }
 }

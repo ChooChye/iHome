@@ -58,7 +58,9 @@ class SecurityService : Service() {
 
     override fun onDestroy() {
         showLog("DestroyService")
-        myRefSens.removeEventListener(sensorListener)
+        if(sensorListener != null){
+            myRefSens.removeEventListener(sensorListener)
+        }
         super.onDestroy()
     }
     fun showLog(message: String){
