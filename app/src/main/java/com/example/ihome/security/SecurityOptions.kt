@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_security_options.*
 import java.io.File
 import java.io.IOException
+import java.nio.channels.InterruptedByTimeoutException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -52,7 +54,6 @@ class SecurityOptions : AppCompatActivity() {
         actionBar.title = "Security Options"
         actionBar.setDisplayHomeAsUpEnabled(true)
         loadData()
-        showPic()
         if(savedPref == 1){
             getSensorData()
         }
@@ -78,7 +79,6 @@ class SecurityOptions : AppCompatActivity() {
         security_button_camera.setOnClickListener(){
             takePic()
         }
-
     }
 
     private fun alarmController(control:Int){
@@ -142,19 +142,21 @@ class SecurityOptions : AppCompatActivity() {
             var map = mutableMapOf<String,Any>()
             map["camera"] = "1"
             myRef.updateChildren(map) //add into Firebase
-            Thread.sleep(4000)
+            Thread.sleep(3200)
             showLog("TurnOffCamera | PI_01_CONTROL/cam_$fileName.jpg")
             map["camera"] = "0"
             myRef.updateChildren(map)
+            showPic()
         }.start()
     }
 
-    private fun showPic(){
+    private fun showPic() {
         try{
             var file: File = File.createTempFile("image", "jpg")
-            storageRef.child(folder).getFile(file)
+
+            storageRef.child("PI_01_CONTROL/cam_20200904102050.jpg").getFile(file)
                 .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
-                    showLog("Inside")
+                    //showLog("Inside")
                     val bitmap : Bitmap = BitmapFactory.decodeFile(file.absolutePath)
                     securityOptions_imageView_cam.setImageBitmap(bitmap)
                 }).addOnFailureListener(OnFailureListener {
@@ -165,6 +167,7 @@ class SecurityOptions : AppCompatActivity() {
             showLog("Empty #q234")
         }
     }
+
 
     private fun getSensorData(){
         securityOptionsListener = object : ValueEventListener {
@@ -207,9 +210,22 @@ class SecurityOptions : AppCompatActivity() {
 
     fun fileName():Long{
         val milliseconds = System.currentTimeMillis()
-        val sdf = SimpleDateFormat("yyyyMMddHHmmss")
-        val resultTime = sdf.format(Date(milliseconds))
-        val fileName = Math.round(resultTime.toDouble()/10.0) * 10
+        val sdf = SimpleDateFormat("yyyyMMdd")
+        val mm = SimpleDateFormat("mm")
+        val ss = SimpleDateFormat("ss")
+        val resultDate = sdf.format(Date(milliseconds))
+        var resultmm = mm.format(Date(milliseconds))
+        var resultss = ss.format(Date(milliseconds))
+        resultss = (Math.round(resultss.toDouble()/10.0) * 10).toString()
+
+        if (resultss == 60.toString()){
+            //showLog("old = $resultmm")
+            resultmm = (1.toInt() + resultmm.toInt()).toString()
+            resultss = "00"
+            //showLog("new = $resultmm")
+        }
+
+        val fileName = (resultDate+resultmm+resultss).toLong()
 
         return fileName
     }
