@@ -112,7 +112,7 @@ class SmartLights : AppCompatActivity() {
                     for (data in child){
                         //change the path variable
                         sensorData = data.child("ultra2").getValue().toString()
-                        if(sensorData < 8.toString()){
+                        if(sensorData <7.toString()){
                             Log.d("TestingRoom_Sensor", "Intruder")
                             smartLights_textView_YouAreIn.visibility = View.VISIBLE
                             smartLights_textView_sensorRoom.visibility = View.VISIBLE
@@ -177,6 +177,7 @@ class SmartLights : AppCompatActivity() {
              myRefSens.removeEventListener(smartLights_lightListener!!)
          }
          super.onDestroy()
+
     }
 
     private fun random(): Double{
