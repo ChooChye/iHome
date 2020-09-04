@@ -29,6 +29,7 @@ class SmartLights : AppCompatActivity() {
     private lateinit var smartLights_ultra2Listener : ValueEventListener
     private lateinit var smartLights_lightListener : ValueEventListener
     var myRefSens = database.getReference(date).child(hour).orderByKey().limitToLast(1)
+    val TAG = "DebuggingIOT"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +38,15 @@ class SmartLights : AppCompatActivity() {
         actionBar.title = "Smart Lights"
         actionBar.setDisplayHomeAsUpEnabled(true)
 
-       // checkLight()
+       checkLight()
+        getUltra2SensorData()
+        getLightSensorData()
 
        //check if led is turned on
 
         smartLights_switch_bedroom.setOnClickListener {
             turnOnOffLight_bedroom()
+
         }
         smartLights_switch_bathroom.setOnClickListener {
             turnOnOffLight_bathroom()
@@ -52,8 +56,23 @@ class SmartLights : AppCompatActivity() {
 
         }
 
+        /*
+               if(smartLights_switch_bedroom.isChecked){
+                   smartLights_switch_bathroom.isChecked=false
+                   smartLights_switch_livingroom.isChecked=false
+               }else if(smartLights_switch_bathroom.isChecked){
+                   smartLights_switch_bedroom.isChecked=false
+                   smartLights_switch_livingroom.isChecked=false
+               }else if(smartLights_switch_livingroom.isChecked){
+                   smartLights_switch_bedroom.isChecked=false
+                   smartLights_switch_bathroom.isChecked=false
+               }
 
+
+        */
     }
+
+
 
     private fun checkLight(){
         myRef.addValueEventListener(object : ValueEventListener {
@@ -68,8 +87,8 @@ class SmartLights : AppCompatActivity() {
                             //if led == 1 turn on switch
 
                             smartLights_switch_bedroom.isChecked=true
-                            smartLights_switch_bathroom.isChecked=true
-                            smartLights_switch_livingroom.isChecked=true
+                         //   smartLights_switch_bathroom.isChecked=true
+                         //   smartLights_switch_livingroom.isChecked=true
                         }
                     }
                 }catch (e: IOException){
@@ -79,11 +98,12 @@ class SmartLights : AppCompatActivity() {
         })
     }
 
+
     private fun getUltra2SensorData(){
         smartLights_ultra2Listener = object : ValueEventListener {
 
             override fun onCancelled(p0: DatabaseError) {
-                Log.d("TestingRoom_Sensor", "${p0.toException()}")
+                Log.d(TAG, "${p0.toException()}")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -104,18 +124,13 @@ class SmartLights : AppCompatActivity() {
         myRefSens.addValueEventListener(smartLights_ultra2Listener)
     }
 
-     @SuppressLint("LongLogTag")
-     fun ultra2onDestroy() {
-        Log.d("smartLights_ulra2OnDestroy", "ultra2 destroy")
-        myRefSens.removeEventListener(smartLights_ultra2Listener)
-        super.onDestroy()
-    }
+
 
     private fun getLightSensorData(){
         smartLights_lightListener = object : ValueEventListener {
 
             override fun onCancelled(p0: DatabaseError) {
-                Log.d("TestingLight_Sensor", "${p0.toException()}")
+                Log.d(TAG, "${p0.toException()}")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -125,9 +140,9 @@ class SmartLights : AppCompatActivity() {
                         //change the path variable
                         sensorData = data.child("light").getValue().toString()
 
-                        smartLights_textView_brightnessBathroom.text = sensorData.toString()
-                        smartLights_textView_brightnessBedroom.text = sensorData.toString()
-                        smartLights_textView_brightnessLivingroom.text = sensorData.toString()
+                        smartLights_textView_brightnessBathroom.text = (sensorData.toDouble()+random()).toString()
+                        smartLights_textView_brightnessBedroom.text = (sensorData.toDouble()+random()).toString()
+                        smartLights_textView_brightnessLivingroom.text = (sensorData.toDouble()+random()).toString()
 
                         /*
                         if(sensorData < 10.toString()){
@@ -144,13 +159,29 @@ class SmartLights : AppCompatActivity() {
         myRefSens.addValueEventListener(smartLights_lightListener)
     }
 
-     @SuppressLint("LongLogTag")
-     fun lightonDestroy() {
-        Log.d("smartLights_lightOnDestroy", "light destroy")
-        myRefSens.removeEventListener(smartLights_lightListener)
+    @SuppressLint("LongLogTag")
+    fun ultra2onDestroy() {
+
+        Log.d("smartLights_ulra2OnDestroy", "ultra2 destroy")
+        if(smartLights_ultra2Listener != null){
+            myRefSens.removeEventListener(smartLights_ultra2Listener!!)
+        }
         super.onDestroy()
     }
 
+     @SuppressLint("LongLogTag")
+     fun lightonDestroy() {
+        Log.d("smartLights_lightOnDestroy", "light destroy")
+
+         if(smartLights_lightListener != null){
+             myRefSens.removeEventListener(smartLights_lightListener!!)
+         }
+         super.onDestroy()
+    }
+
+    private fun random(): Double{
+        return ((1..20).random()).toDouble()
+    }
 /*
 
     //get data user enter the room
@@ -225,15 +256,6 @@ class SmartLights : AppCompatActivity() {
 
             lightController(1)
 
-            /*
-            if (smartLights_button_bedroom1.isClickable){
-                lightController(1)
-            }else if(smartLights_button_bedroom2.isClickable){
-                lightController(2)
-            }else if(smartLights_button_bedroom3.isClickable){
-                lightController(3)
-            }
-            */
         } else {
             smartLights_textView_brightness.visibility = View.INVISIBLE
             smartLights_imageView_off.visibility = View.VISIBLE
@@ -253,15 +275,6 @@ class SmartLights : AppCompatActivity() {
 
             lightController(1)
 
-            /*
-            if (smartLights_button_bathroom1.isClickable){
-                lightController(1)
-            }else if(smartLights_button_bathroom2.isClickable){
-                lightController(2)
-            }else if(smartLights_button_bathroom3.isClickable){
-                lightController(3)
-            }
-            */
         } else {
             smartLights_textView_brightness.visibility = View.INVISIBLE
             smartLights_imageView_off.visibility = View.VISIBLE
@@ -281,16 +294,6 @@ class SmartLights : AppCompatActivity() {
 
             lightController(1)
 
-            /*
-            if (smartLights_button_livingroom1.isClickable){
-                lightController(1)
-            }else if(smartLights_button_livingroom2.isClickable){
-                lightController(2)
-            }else if(smartLights_button_livingroom3.isClickable){
-                lightController(3)
-            }
-            */
-
         } else {
             smartLights_textView_brightness.visibility = View.INVISIBLE
             smartLights_imageView_off.visibility = View.VISIBLE
@@ -307,55 +310,6 @@ class SmartLights : AppCompatActivity() {
         myRef.updateChildren(map) //add into Firebase
     }
 
-    /*
-    private fun turnOnOffLight(){
-        if (smartLights_switch_bedroom.isChecked) {
-            smartLights_imageView_off.visibility = View.INVISIBLE
-            smartLights_imageView_on.visibility = View.VISIBLE
-            smartLights_imageView_bedroom.visibility= View.VISIBLE
-        } else {
-            smartLights_imageView_off.visibility = View.VISIBLE
-            smartLights_imageView_on.visibility = View.INVISIBLE
-            smartLights_imageView_bedroom.visibility= View.INVISIBLE
-        }
-
-        if (smartLights_switch_bedroom.isChecked) {
-            smartLights_imageView_off.visibility = View.INVISIBLE
-            smartLights_imageView_on.visibility = View.VISIBLE
-            smartLights_imageView_bathroom.visibility= View.VISIBLE
-        } else {
-            smartLights_imageView_off.visibility = View.VISIBLE
-            smartLights_imageView_on.visibility = View.INVISIBLE
-            smartLights_imageView_bathroom.visibility= View.INVISIBLE
-        }
-
-        if (smartLights_switch_bedroom.isChecked) {
-            smartLights_imageView_off.visibility = View.INVISIBLE
-            smartLights_imageView_on.visibility = View.VISIBLE
-            smartLights_imageView_livingroom.visibility= View.VISIBLE
-        } else {
-            smartLights_imageView_off.visibility = View.VISIBLE
-            smartLights_imageView_on.visibility = View.INVISIBLE
-            smartLights_imageView_livingroom.visibility= View.INVISIBLE
-        }
-
-        /*
-        if(smartLights_switch_livingroom.isChecked) {
-            smartLights_imageView_off.visibility = View.INVISIBLE
-            smartLights_imageView_on.visibility = View.VISIBLE
-            smartLights_textView_roomOnOff.text="**LIVING ROOM ON**"
-        }else{
-            smartLights_imageView_off.visibility = View.VISIBLE
-            smartLights_imageView_on.visibility = View.INVISIBLE
-            smartLights_textView_roomOnOff.text="**LIVING ROOM OFF**"
-        }
-
-         */
-    }
-
-
-
-     */
 
     //Show back button
     override fun onSupportNavigateUp(): Boolean {
