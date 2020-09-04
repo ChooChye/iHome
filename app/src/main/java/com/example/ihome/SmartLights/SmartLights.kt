@@ -38,7 +38,7 @@ class SmartLights : AppCompatActivity() {
         actionBar.title = "Smart Lights"
         actionBar.setDisplayHomeAsUpEnabled(true)
 
-       checkLight()
+      checkLight()
         getUltra2SensorData()
         getLightSensorData()
 
