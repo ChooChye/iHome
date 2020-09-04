@@ -12,7 +12,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_security_options.*
 import kotlinx.android.synthetic.main.activity_smart_lights.*
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,7 +36,8 @@ class SmartLights : AppCompatActivity() {
         var actionBar: ActionBar = supportActionBar!!
         actionBar.title = "Smart Lights"
         actionBar.setDisplayHomeAsUpEnabled(true)
-        //getSensorData()
+
+       // checkLight()
 
        //check if led is turned on
 
@@ -48,6 +51,32 @@ class SmartLights : AppCompatActivity() {
             turnOnOffLight_livingroom()
 
         }
+
+
+    }
+
+    private fun checkLight(){
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("TestingLight_READ", "${p0.toException()}")
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                try{
+                    if(p0.exists()){
+                        val map: Map<String, Object> = p0.getValue() as Map<String, Object>
+                        if(map["led"].toString() == 1.toString()){
+                            //if led == 1 turn on switch
+
+                            smartLights_switch_bedroom.isChecked=true
+                            smartLights_switch_bathroom.isChecked=true
+                            smartLights_switch_livingroom.isChecked=true
+                        }
+                    }
+                }catch (e: IOException){
+                    Log.d("Error #312 $e", "error")
+                }
+            }
+        })
     }
 
     private fun getUltra2SensorData(){
@@ -63,7 +92,7 @@ class SmartLights : AppCompatActivity() {
                     for (data in child){
                         //change the path variable
                         sensorData = data.child("ultra2").getValue().toString()
-                        if(sensorData < 10.toString()){
+                        if(sensorData < 8.toString()){
                             Log.d("TestingRoom_Sensor", "Intruder")
                             smartLights_textView_YouAreIn.visibility = View.VISIBLE
                             smartLights_textView_sensorRoom.visibility = View.VISIBLE
