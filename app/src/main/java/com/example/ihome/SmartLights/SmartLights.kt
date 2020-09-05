@@ -130,9 +130,9 @@ class SmartLights : AppCompatActivity() {
                         //change the path variable
                         sensorData = data.child("light").getValue().toString()
 
-                        smartLights_textView_brightnessBedroom.text = (sensorData.toDouble()+random()).toString()
-                        smartLights_textView_brightnessBathroom.text = (sensorData.toDouble()+random()).toString()
-                        smartLights_textView_brightnessLivingroom.text = (sensorData.toDouble()+random()).toString()
+                        smartLights_textView_brightnessBedroom.text = sensorData
+                        smartLights_textView_brightnessBathroom.text = sensorData
+                        smartLights_textView_brightnessLivingroom.text = sensorData
                     }
                 }
             }
