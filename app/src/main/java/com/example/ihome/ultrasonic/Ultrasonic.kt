@@ -84,14 +84,16 @@ class Ultrasonic : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun setStatus(status: String) {
         if( status <= 50.toString()){
-
             comment_status.text="There's an issue with the water tank, it is not fill any water. Please send someone to check it!"
         }
         else if ( status > 200.toString()){
             comment_status.text="There's an issue with the water tank, the water is over 200L, please send someone to check it!"
         }
-        else{
+        else if (status <=200.toString() || status >=51.toString()){
             comment_status.text="Water tank is normal, all good to go."
+        }
+        else{
+            comment_status.text="An error occur with the sensor"
         }
     }
 }
