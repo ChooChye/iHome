@@ -22,6 +22,8 @@
         <activity android:name=".Thermometer.Thermometer" />
         <activity android:name=".SmartLights.SmartLights" />
         <activity android:name=".security.Security" />
+        <activity android:name=".ultrasonic.Ultrasonic" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

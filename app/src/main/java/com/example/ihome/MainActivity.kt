@@ -6,15 +6,13 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.GridView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ihome.SmartLights.SmartLights
 import com.example.ihome.Thermometer.Thermometer
 import com.example.ihome.adapters.MenuAdapter
 import com.example.ihome.models.MenuItem
 import com.example.ihome.security.Security
-import com.google.firebase.database.FirebaseDatabase
-
+import com.example.ihome.ultrasonic.Ultrasonic
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
@@ -32,7 +30,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         languageAdapter = MenuAdapter(applicationContext, arrayList!!)
         gridView?.adapter = languageAdapter
         gridView?.onItemClickListener = this
-
     }
 
     private fun setDataList() : ArrayList<MenuItem>{
@@ -41,6 +38,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         arrayList.add(MenuItem(R.drawable.cctv_camera, "Security"))
         arrayList.add(MenuItem(R.drawable.lamp, "Home Lights"))
         arrayList.add(MenuItem(R.drawable.thermometer, "Thermometer"))
+        arrayList.add(MenuItem(R.drawable.watertank , "Water Tank"))
 
         return arrayList
     }
@@ -59,6 +57,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
             2 ->{
                 var ThemIntent = Intent(this, Thermometer::class.java)
                 startActivity(ThemIntent)
+            }
+            3 -> {
+                var ultrasonicIntent = Intent(this, Ultrasonic::class.java)
+                startActivity(ultrasonicIntent)
             }
         }
     }

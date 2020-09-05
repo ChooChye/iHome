@@ -2,5 +2,13 @@
     <string name="app_name">iHome</string>
     <string name="where">Bedroom, Bathroom, Living Room</string>
     <string name="humid_percent">Humidity %</string>
-    <string name="temp_celsius">Temperature ℃</string>
+    <string name="_50">50%(250L)</string>
+    <string name="_75">75%(375L)</string>
+    <string name="_25">25%(125L)</string>
+    <string name="_low">Low(0L)</string>
+    <string name="indicator"><![CDATA[Indicator >>]]></string>
+    <string name="water_reserve_level">Water Reserve Level</string>
+    <string name="max">Max(500L)</string>
+    <string name="water_value"><![CDATA[Water Level (%) >>]]></string>
+    <string name="temp_celsius">celsius</string>
 </resources>
