@@ -13,7 +13,7 @@
         android:layout_marginTop="42dp"
         android:text="You are IN"
         android:textStyle="bold"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:textColor="@color/sensorRoom_text"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         android:text="@string/where"
         android:textColor="@color/black"
         android:textSize="24sp"
-android:visibility="visible"
+android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/smartLights_textView_YouAreIn"
         app:layout_constraintStart_toStartOf="@+id/smartLights_textView_YouAreIn"
         app:layout_constraintTop_toTopOf="@+id/smartLights_textView_YouAreIn" />
