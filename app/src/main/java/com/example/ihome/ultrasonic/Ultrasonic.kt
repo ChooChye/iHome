@@ -1,9 +1,9 @@
 package com.example.ihome.ultrasonic
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ProgressBar
 import androidx.appcompat.app.ActionBar
 import com.example.ihome.R
 import com.google.firebase.database.DataSnapshot
@@ -20,10 +20,12 @@ class Ultrasonic : AppCompatActivity() {
 
     private val mdate: String = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
     private val hour: String = SimpleDateFormat("HH", Locale.getDefault()).format(Date())
-    private val date = "PI_01_"+mdate
+    private val date = "PI_01_$mdate"
     private var myRefSens = database.getReference(date).child(hour).orderByKey().limitToLast(1)
     private lateinit var sensorData:String
     private lateinit var sensorUltrasonic: ValueEventListener
+
+    private var progressBar: ProgressBar? = null
 
     val tag = "DebuggingIOT"
 
@@ -38,6 +40,7 @@ class Ultrasonic : AppCompatActivity() {
     }
 
     private fun getUltraSensorData(){
+        progressBar = findViewById<ProgressBar>(R.id.indicator)
         sensorUltrasonic = object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(tag, "${p0.toException()}")
@@ -46,10 +49,10 @@ class Ultrasonic : AppCompatActivity() {
                 if(p0.exists()){
                     val child = p0.children
                     for (data in child){
-                        sensorData = data.child("Ultra2").getValue().toString()//change the path variable
-
-                        percentage.text= (sensorData.toDouble()+random()).toString()
-                        //indicator.setProgress(percentage.text/200)
+                        sensorData = data.child("ultra2").value.toString()//change the path variable
+                        water_value.text= (sensorData.toDouble()).toString()
+                        progressBar!!.progress = sensorData.toDouble().toInt()/2
+                        percentage.text= (sensorData.toDouble()/2).toString()
                     }
                 }
             }
@@ -59,10 +62,6 @@ class Ultrasonic : AppCompatActivity() {
 
     private fun destroyListeners(){
         myRefSens.removeEventListener(sensorUltrasonic)
-    }
-
-    private fun random(): Double{
-        return ((1..20).random()).toDouble()
     }
 
     override fun onDestroy() {
@@ -76,6 +75,4 @@ class Ultrasonic : AppCompatActivity() {
         this.finish()
         return true
     }
-
-
 }

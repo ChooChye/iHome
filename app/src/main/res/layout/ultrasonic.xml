@@ -6,25 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".ultrasonic.Ultrasonic">
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/percentage"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.164"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/percentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="0"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/percentage3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/symbol"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/percentage"
+        app:layout_constraintTop_toTopOf="@+id/textView8" />
+
     <ProgressBar
         android:id="@+id/indicator"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="0dp"
         android:layout_height="400dp"
         android:layout_centerInParent="true"
-        android:layout_marginStart="310dp"
-        android:layout_marginLeft="310dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="216dp"
         android:max="100"
-        android:progress="50"
         android:progressDrawable="@drawable/progress_drawable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
@@ -58,12 +85,14 @@
         android:text="@string/_50"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintEnd_toStartOf="@+id/indicator" />
+        app:layout_constraintEnd_toStartOf="@+id/indicator"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="124dp"
-        android:layout_height="39dp"
+        android:layout_width="112dp"
+        android:layout_height="34dp"
         android:layout_marginBottom="44dp"
         android:text="@string/_25"
         android:textSize="25sp"
@@ -98,7 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="@string/indicator"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/indicator"
@@ -109,25 +138,24 @@
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginTop="20dp"
         android:text="@string/water_value"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/indicator" />
 
     <TextView
-        android:id="@+id/percentage"
+        android:id="@+id/water_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="51dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:text="0"
         android:textSize="25sp"
         app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toTopOf="@+id/textView16" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
