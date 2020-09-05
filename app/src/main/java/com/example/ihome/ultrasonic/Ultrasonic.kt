@@ -1,5 +1,6 @@
 package com.example.ihome.ultrasonic
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -40,6 +41,7 @@ class Ultrasonic : AppCompatActivity() {
     }
 
     private fun getUltraSensorData(){
+
         progressBar = findViewById<ProgressBar>(R.id.indicator)
         sensorUltrasonic = object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -53,6 +55,9 @@ class Ultrasonic : AppCompatActivity() {
                         water_value.text= (sensorData.toDouble()).toString()
                         progressBar!!.progress = sensorData.toDouble().toInt()/2
                         percentage.text= (sensorData.toDouble()/2).toString()
+
+                        val status = (sensorData.toDouble()).toString()
+                        setStatus(status)
                     }
                 }
             }
@@ -74,5 +79,19 @@ class Ultrasonic : AppCompatActivity() {
         onBackPressed()
         this.finish()
         return true
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setStatus(status: String) {
+        if( status <= 50.toString()){
+
+            comment_status.text="There's an issue with the water tank, it is not fill any water. Please send someone to check it!"
+        }
+        else if ( status > 200.toString()){
+            comment_status.text="There's an issue with the water tank, the water is over 200L, please send someone to check it!"
+        }
+        else{
+            comment_status.text="Water tank is normal, all good to go."
+        }
     }
 }
