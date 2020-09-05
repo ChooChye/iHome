@@ -86,7 +86,7 @@ class SecurityOptions : AppCompatActivity() {
 
     private fun alarmController(control:Int){
         var map = mutableMapOf<String,Any>()
-        map["buzzer"] = control
+        map["buzzer"] = "$control"
         myRef.updateChildren(map) //add into Firebase
     }
 
@@ -99,7 +99,7 @@ class SecurityOptions : AppCompatActivity() {
                try{
                    if(p0.exists()){
                        val map: Map<String, Object> = p0.getValue() as Map<String, Object>
-                       if(map["buzzer"].toString() == 1.toString()){
+                       if(map["buzzer"].toString() == "1"){
                            //if buzzer == 1 turn on switch
                            security_switch_alarm.isChecked = true
                        }
@@ -139,34 +139,34 @@ class SecurityOptions : AppCompatActivity() {
     @SuppressLint("SimpleDateFormat")
     fun takePic(){
         securityOptions_progressBar.visibility = View.VISIBLE
-        val fileName = fileName()
-        folder = "PI_01_CONTROL/cam_$fileName.jpg"
         Thread {
             showLog("TurnOnCamera")
             var map = mutableMapOf<String,Any>()
             map["camera"] = "1"
             myRef.updateChildren(map) //add into Firebase
             Thread.sleep(3200)
-            showLog("TurnOffCamera | PI_01_CONTROL/cam_$fileName.jpg")
             map["camera"] = "0"
             myRef.updateChildren(map)
+            folder = "PI_01_CONTROL/cam_${fileName()}.jpg"
+            Thread.sleep(3000)
+            showLog("TurnOffCamera | $folder")
             securityOptions_progressBar.visibility = View.INVISIBLE
-            showPic()
+            showPic(folder)
         }.start()
     }
 
-    private fun showPic() {
+    private fun showPic(folder:String) {
         try{
             var file: File = File.createTempFile("image", "jpg")
 
-            storageRef.child("PI_01_CONTROL/cam_20200904102050.jpg").getFile(file)
+            storageRef.child(folder).getFile(file) //PI_01_CONTROL/cam_20200905093210.jpg
                 .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
                     //showLog("Inside")
                     val bitmap : Bitmap = BitmapFactory.decodeFile(file.absolutePath)
                     securityOptions_imageView_cam.setImageBitmap(bitmap)
                 }).addOnFailureListener(OnFailureListener {
                     // Handle failed download
-                    showLog("Fail to show pic #675")
+                    showLog("Fail to show pic #675 | $it" )
                 })
         }catch (e: IOException){
             showLog("Empty #q234")
@@ -215,7 +215,7 @@ class SecurityOptions : AppCompatActivity() {
 
     fun fileName():Long{
         val milliseconds = System.currentTimeMillis()
-        val sdf = SimpleDateFormat("yyyyMMdd")
+        val sdf = SimpleDateFormat("yyyyMMddHH")
         val mm = SimpleDateFormat("mm")
         val ss = SimpleDateFormat("ss")
         val resultDate = sdf.format(Date(milliseconds))
