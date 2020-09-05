@@ -77,8 +77,7 @@ class SmartLights : AppCompatActivity() {
                             //if led == 1 turn on switch
 
                             smartLights_switch_bedroom.isChecked=true
-                         //   smartLights_switch_bathroom.isChecked=true
-                         //   smartLights_switch_livingroom.isChecked=true
+
                         }
                     }
                 }catch (e: IOException){
@@ -130,9 +129,9 @@ class SmartLights : AppCompatActivity() {
                         //change the path variable
                         sensorData = data.child("light").getValue().toString()
 
-                        smartLights_textView_brightnessBedroom.text = sensorData
-                        smartLights_textView_brightnessBathroom.text = sensorData
-                        smartLights_textView_brightnessLivingroom.text = sensorData
+                        smartLights_textView_brightnessBedroom.text = sensorData.toDouble().toString()
+                        smartLights_textView_brightnessBathroom.text = sensorData+random()
+                        smartLights_textView_brightnessLivingroom.text = sensorData+random()
                     }
                 }
             }
@@ -162,7 +161,7 @@ class SmartLights : AppCompatActivity() {
     }
 
     private fun random(): Double{
-        return ((1..20).random()).toDouble()
+        return ((1..2).random()).toDouble()
     }
 
     private fun turnOnOffLight_bedroom() {
