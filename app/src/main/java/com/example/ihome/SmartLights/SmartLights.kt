@@ -39,8 +39,8 @@ class SmartLights : AppCompatActivity() {
 
        // checkLight()
 
+        getUltra2SensorData()
        //check if led is turned on
-
         smartLights_switch_bedroom.setOnClickListener {
             turnOnOffLight_bedroom()
         }
@@ -49,10 +49,7 @@ class SmartLights : AppCompatActivity() {
         }
         smartLights_switch_livingroom.setOnClickListener {
             turnOnOffLight_livingroom()
-
         }
-
-
     }
 
     private fun checkLight(){
@@ -103,14 +100,6 @@ class SmartLights : AppCompatActivity() {
         }
         myRefSens.addValueEventListener(smartLights_ultra2Listener)
     }
-
-     @SuppressLint("LongLogTag")
-     fun ultra2onDestroy() {
-        Log.d("smartLights_ulra2OnDestroy", "ultra2 destroy")
-        myRefSens.removeEventListener(smartLights_ultra2Listener)
-        super.onDestroy()
-    }
-
     private fun getLightSensorData(){
         smartLights_lightListener = object : ValueEventListener {
 
@@ -142,13 +131,6 @@ class SmartLights : AppCompatActivity() {
             }
         }
         myRefSens.addValueEventListener(smartLights_lightListener)
-    }
-
-     @SuppressLint("LongLogTag")
-     fun lightonDestroy() {
-        Log.d("smartLights_lightOnDestroy", "light destroy")
-        myRefSens.removeEventListener(smartLights_lightListener)
-        super.onDestroy()
     }
 
 /*
@@ -362,5 +344,13 @@ class SmartLights : AppCompatActivity() {
         onBackPressed()
         this.finish()
         return true
+    }
+
+    @SuppressLint("LongLogTag")
+    override fun onDestroy() {
+        Log.d("smartLights_lightOnDestroy", "light destroy")
+        myRefSens.removeEventListener(smartLights_ultra2Listener)
+        myRefSens.removeEventListener(smartLights_lightListener)
+        super.onDestroy()
     }
 }
