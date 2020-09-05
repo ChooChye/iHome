@@ -77,8 +77,7 @@ class SmartLights : AppCompatActivity() {
                             //if led == 1 turn on switch
 
                             smartLights_switch_bedroom.isChecked=true
-                         //   smartLights_switch_bathroom.isChecked=true
-                         //   smartLights_switch_livingroom.isChecked=true
+
                         }
                     }
                 }catch (e: IOException){
